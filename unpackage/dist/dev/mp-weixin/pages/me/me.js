@@ -1,23 +1,54 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const common_assets = require("../../common/assets.js");
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
-  const _easycom_uni_card2 = common_vendor.resolveComponent("uni-card");
-  const _easycom_uni_list_item2 = common_vendor.resolveComponent("uni-list-item");
-  const _easycom_uni_list2 = common_vendor.resolveComponent("uni-list");
-  (_easycom_uni_icons2 + _easycom_uni_card2 + _easycom_uni_list_item2 + _easycom_uni_list2)();
+  _easycom_uni_icons2();
 }
 const _easycom_uni_icons = () => "../../uni_modules/uni-icons/components/uni-icons/uni-icons.js";
-const _easycom_uni_card = () => "../../uni_modules/uni-card/components/uni-card/uni-card.js";
-const _easycom_uni_list_item = () => "../../uni_modules/uni-list/components/uni-list-item/uni-list-item.js";
-const _easycom_uni_list = () => "../../uni_modules/uni-list/components/uni-list/uni-list.js";
 if (!Math) {
-  (_easycom_uni_icons + _easycom_uni_card + _easycom_uni_list_item + _easycom_uni_list + tabBar)();
+  (_easycom_uni_icons + tabBar)();
 }
 const tabBar = () => "../../components/tabBar.js";
 const _sfc_main = {
   __name: "me",
   setup(__props) {
+    const gridList = common_vendor.ref([
+      {
+        title: "好友管理",
+        icon: "personadd",
+        color: "#007AFF",
+        handler: () => navTo("friend-manage")
+      },
+      {
+        title: "发布的活动",
+        icon: "notification",
+        color: "#4CD964",
+        handler: () => navTo("my-published")
+      },
+      {
+        title: "参与的活动",
+        icon: "flag",
+        color: "#F0AD4E",
+        handler: () => navTo("my-joined")
+      },
+      {
+        title: "建议反馈",
+        icon: "help",
+        color: "#DD524D",
+        handler: () => navTo("feedback")
+      },
+      {
+        title: "联系客服",
+        icon: "phone",
+        color: "#10AEFF",
+        handler: () => navTo("about")
+      }
+    ]);
+    const handleGridClick = (item) => {
+      if (item.handler)
+        item.handler();
+    };
     const userInfo = common_vendor.reactive({
       avatar: "/static/dinohead.png",
       nickname: "未登录用户",
@@ -68,82 +99,45 @@ const _sfc_main = {
     const navTo = (path) => {
       common_vendor.index.navigateTo({ url: `/pages/me/${path}` });
     };
-    const contactService = () => {
-    };
     return (_ctx, _cache) => {
       return common_vendor.e({
-        a: userInfo.avatar,
-        b: common_vendor.p({
+        a: common_assets._imports_0,
+        b: userInfo.avatar,
+        c: common_vendor.p({
           type: "camera",
           size: "24",
           color: "#666"
         }),
-        c: common_vendor.o(uploadAvatar),
-        d: common_vendor.t(userInfo.nickname),
-        e: userInfo.phone
+        d: common_vendor.o(uploadAvatar),
+        e: common_vendor.t(userInfo.nickname),
+        f: userInfo.phone
       }, userInfo.phone ? {
-        f: common_vendor.t(userInfo.phone)
+        g: common_vendor.t(userInfo.phone)
       } : {}, {
-        g: userInfo.birthday
+        h: userInfo.birthday
       }, userInfo.birthday ? {
-        h: common_vendor.t(userInfo.birthday)
+        i: common_vendor.t(userInfo.birthday)
       } : {}, {
-        i: common_vendor.p({
-          type: "personadd",
-          size: "20",
-          color: "#007AFF"
+        j: common_vendor.f(gridList.value, (item, index, i0) => {
+          return {
+            a: "19c123a7-1-" + i0,
+            b: common_vendor.p({
+              type: item.icon,
+              size: 30,
+              color: item.color
+            }),
+            c: common_vendor.t(item.title),
+            d: index,
+            e: common_vendor.o(($event) => handleGridClick(item), index)
+          };
         }),
-        j: common_vendor.p({
-          title: "好友管理",
-          showArrow: true
-        }),
-        k: common_vendor.p({
-          type: "notification",
-          size: "20",
-          color: "#4CD964"
-        }),
-        l: common_vendor.o(($event) => navTo("my-published")),
-        m: common_vendor.p({
-          title: "我发布的活动",
-          showArrow: true
-        }),
-        n: common_vendor.p({
-          type: "flag",
-          size: "20",
-          color: "#F0AD4E"
-        }),
-        o: common_vendor.o(($event) => navTo("my-joined")),
-        p: common_vendor.p({
-          title: "我参与的活动",
-          showArrow: true
-        }),
-        q: common_vendor.p({
-          type: "help",
-          size: "20",
-          color: "#DD524D"
-        }),
-        r: common_vendor.o(($event) => navTo("feedback")),
-        s: common_vendor.p({
-          title: "建议反馈",
-          showArrow: true
-        }),
-        t: common_vendor.p({
-          type: "phone",
-          size: "20",
-          color: "#10AEFF"
-        }),
-        v: common_vendor.o(contactService),
-        w: common_vendor.p({
-          title: "联系客服",
-          showArrow: true
-        }),
-        x: !userInfo.phone
+        k: !userInfo.phone
       }, !userInfo.phone ? {
-        y: common_vendor.o(decryptPhoneNumber)
+        l: common_vendor.o(decryptPhoneNumber)
       } : {
-        z: common_vendor.o(logout)
+        m: common_vendor.o(logout)
       }, {
-        A: common_vendor.p({
+        n: common_vendor.p({
           selectedIndex: 3
         })
       });

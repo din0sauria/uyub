@@ -18,40 +18,44 @@
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isActive: false
-    };
-  },
-  methods: {
-    toggleButton() {
-      this.isActive = !this.isActive;
-      this.isActive ? this.$refs.popup.open() : this.$refs.popup.close();
-    },
-    handleButton1() {
-      uni.navigateTo({
-        url: '/pages/add/dynamic'
-      });
-      this.closePopup();
-    },
-    handleButton2() {
-      uni.navigateTo({
-        url: '/pages/add/activity'
-      });
-      this.closePopup();
-    },
-    closePopup() {
-      this.isActive = false;
-      this.$refs.popup.close();
-    },
-    onPopupChange(e) {
-      // 监听弹窗关闭，同步状态
-      if (e.type === 'close') this.isActive = false;
-    }
-  }
+<script setup>
+import { ref } from 'vue';
+
+// 定义响应式状态
+const isActive = ref(false);
+
+// 定义方法
+const toggleButton = () => {
+  isActive.value = !isActive.value;
+  isActive.value ? popup.value.open() : popup.value.close();
 };
+
+const handleButton1 = () => {
+  uni.navigateTo({
+    url: '/pages/add/dynamic'
+  });
+  closePopup();
+};
+
+const handleButton2 = () => {
+  uni.navigateTo({
+    url: '/pages/add/activity'
+  });
+  closePopup();
+};
+
+const closePopup = () => {
+  isActive.value = false;
+  popup.value.close();
+};
+
+const onPopupChange = (e) => {
+  // 监听弹窗关闭，同步状态
+  if (e.type === 'close') isActive.value = false;
+};
+
+// 获取 popup 组件的引用
+const popup = ref(null);
 </script>
 
 <style scoped>

@@ -1,7 +1,8 @@
 <template>
+  <view class="header"><image src="/static/dinoundertreezoom.png" mode="aspectFill" class="img"></image> </view>
   <view class="container">
     <!-- 用户信息卡片 -->
-    <uni-card class="info">
+    <view class="info">
       <view class="user-info">
         <view class="avatar-section" @click="uploadAvatar">
           <image class="avatar" :src="userInfo.avatar" mode="aspectFill" />
@@ -9,40 +10,21 @@
         </view>
         <view class="info-section">
           <text class="nickname">{{ userInfo.nickname }}</text>
-          <text class="phone" v-if="userInfo.phone">手机号：{{ userInfo.phone }}</text>
+          <text class="phone" v-if="userInfo.phone">ID：{{ userInfo.phone }}</text>
           <text class="birthday" v-if="userInfo.birthday">生日：{{ userInfo.birthday }}</text>
         </view>
       </view>
-    </uni-card>
+    </view>
 
     <!-- 功能入口 -->
-    <uni-list>
-      <uni-list-item title="好友管理" showArrow>
-        <template v-slot:header>
-          <uni-icons type="personadd" size="20" color="#007AFF" />
-        </template>
-      </uni-list-item>
-      <uni-list-item title="我发布的活动" showArrow @click="navTo('my-published')">
-        <template v-slot:header>
-          <uni-icons type="notification" size="20" color="#4CD964" />
-        </template>
-      </uni-list-item>
-      <uni-list-item title="我参与的活动" showArrow @click="navTo('my-joined')">
-        <template v-slot:header>
-          <uni-icons type="flag" size="20" color="#F0AD4E" />
-        </template>
-      </uni-list-item>
-      <uni-list-item title="建议反馈" showArrow @click="navTo('feedback')">
-        <template v-slot:header>
-          <uni-icons type="help" size="20" color="#DD524D" />
-        </template>
-      </uni-list-item>
-      <uni-list-item title="联系客服" showArrow @click="contactService">
-        <template v-slot:header>
-          <uni-icons type="phone" size="20" color="#10AEFF" />
-        </template>
-      </uni-list-item>
-    </uni-list>
+    <view class="grid-container">
+          <view class="grid-item" v-for="(item, index) in gridList" :key="index" @click="handleGridClick(item)">
+            <view class="grid-icon">
+              <uni-icons :type="item.icon" :size="30" :color="item.color" />
+            </view>
+            <text class="grid-text">{{ item.title }}</text>
+          </view>
+        </view>
 
     <!-- 手机号登录按钮 -->
     <view class="login-section" v-if="!userInfo.phone">
@@ -52,7 +34,7 @@
         open-type="getPhoneNumber" 
         @getphonenumber="decryptPhoneNumber"
       >
-        手机号快速登录
+        快速登录
       </button>
     </view>
     <view class="login-section" v-else>
@@ -61,7 +43,7 @@
         class="login-btn"
         @click="logout"
       >
-        退出登录/切换账号
+        退出登录
       </button>
     </view>
   </view>
@@ -72,7 +54,44 @@
 import { ref, reactive, toRaw } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
 import tabBar from '/components/tabBar.vue';
+// 在script部分添加宫格数据
+const gridList = ref([
+  { 
+    title: '好友管理', 
+    icon: 'personadd',
+    color: '#007AFF',
+    handler: () => navTo('friend-manage')
+  },
+  { 
+    title: '发布的活动', 
+    icon: 'notification',
+    color: '#4CD964',
+    handler: () => navTo('my-published')
+  },
+  { 
+    title: '参与的活动', 
+    icon: 'flag',
+    color: '#F0AD4E',
+    handler: () => navTo('my-joined')
+  },
+  { 
+    title: '建议反馈', 
+    icon: 'help',
+    color: '#DD524D',
+    handler: () => navTo('feedback')
+  },
+  { 
+    title: '联系客服', 
+    icon: 'phone',
+    color: '#10AEFF',
+    handler: () => navTo('about')
+  }
+]);
 
+// 添加宫格点击处理
+const handleGridClick = (item) => {
+  if(item.handler) item.handler();
+};
 // 用户信息
 const userInfo = reactive({
   avatar: '/static/dinohead.png',
@@ -160,18 +179,32 @@ const contactService = () => {
 </script>
 
 <style scoped lang="scss">
-.container {
-  padding: 30rpx;
-  background-color: #f5f5f5;
-  min-height: 100vh;
+.header{
+  width: 100%;
+  height: 400rpx;
+  z-index: -1;
 }
-
+.img{
+  width: 100%;
+  height: 400rpx;
+}
+.container {
+  position: absolute;
+  left: 5%;
+  top:300rpx;
+  width: 90%;
+}
+.info{
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
 
 .user-info {
   display: flex;
   align-items: center;
   padding: 20rpx 0;
-  
   .avatar-section {
     position: relative;
     margin-right: 40rpx;
@@ -210,7 +243,55 @@ const contactService = () => {
     }
   }
 }
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 20rpx 0;
+  margin-bottom: 20rpx;
+}
 
+.grid-item {
+  flex: 0 0 33.3333%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30rpx 0;
+  position: relative;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 60%;
+    background-color: #eee;
+  }
+  
+  &:nth-child(3n):after {
+    display: none;
+  }
+}
+
+.grid-icon {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15rpx;
+}
+
+.grid-text {
+  font-size: 26rpx;
+  color: #666;
+  text-align: center;
+}
 .login-section {
   margin: 40rpx 30rpx;
   
@@ -220,7 +301,5 @@ const contactService = () => {
   }
 }
 
-::v-deep .uni-list-item__header {
-  margin-right: 16rpx;
-}
+
 </style>

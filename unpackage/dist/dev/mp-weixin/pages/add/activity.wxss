@@ -31,20 +31,11 @@
 }
 .input-field.data-v-ccb2f267,
 .textarea-field.data-v-ccb2f267 {
-  width: 600rpx;
   padding: 20rpx;
   border: 2rpx solid #e9ecef;
   border-radius: 8rpx;
   font-size: 28rpx;
   color: #333;
-}
-.input-field.textarea-field.data-v-ccb2f267,
-.textarea-field.textarea-field.data-v-ccb2f267 {
-  height: 200rpx;
-}
-.placeholder-style.data-v-ccb2f267 {
-  color: #adb5bd;
-  font-size: 28rpx;
 }
 .upload-container.data-v-ccb2f267 {
   display: flex;
@@ -101,21 +92,6 @@
   display: block;
   margin-top: 20rpx;
 }
-.category-picker .picker-content.data-v-ccb2f267 {
-  padding: 20rpx;
-  border: 2rpx solid #e9ecef;
-  border-radius: 8rpx;
-  font-size: 28rpx;
-  color: #333;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.category-picker .picker-content .arrow-icon.data-v-ccb2f267 {
-  color: #666;
-  font-size: 24rpx;
-  margin-left: 20rpx;
-}
 .submit-btn.data-v-ccb2f267 {
   margin: 40rpx 0;
   background: #007aff;
@@ -137,25 +113,17 @@
 .submit-btn.data-v-ccb2f267:active {
   opacity: 0.9;
 }
-
-/* 新增特色样式 */
 .address-group .address-item.data-v-ccb2f267 {
   margin-bottom: 30rpx;
 }
 .address-group .address-item.data-v-ccb2f267:last-child {
   margin-bottom: 0;
 }
+.city-picker.data-v-ccb2f267 {
+  display: flex;
+}
 .time-picker .date-picker.data-v-ccb2f267 {
   margin-bottom: 30rpx;
-}
-.time-picker .date-picker .picker-content.data-v-ccb2f267 {
-  padding: 20rpx;
-  border: 2rpx solid #e9ecef;
-  border-radius: 8rpx;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 .time-picker .time-container.data-v-ccb2f267 {
   display: flex;

@@ -205,6 +205,12 @@ const _sfc_main = {
       fetchActivityDetail(activityId);
     });
     const handleSignUp = () => {
+      if (userInfo.phone == "") {
+        common_vendor.index.showToast({
+          title: "请先登录",
+          icon: "none"
+        });
+      }
       if (btntext.value != "立即报名")
         return;
       activity.value.participants += 1;

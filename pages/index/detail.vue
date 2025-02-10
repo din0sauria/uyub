@@ -54,9 +54,9 @@
     
   </view>
   
-  <br>
-  <br>
-  <br>
+ <view style="height: 200rpx;">
+   
+ </view>
 
   <!-- 报名按钮 -->
   <view class="button-container">
@@ -288,6 +288,11 @@ const activities = [{
 
   // 报名按钮点击事件
   const handleSignUp = () => {
+    if(userInfo.phone==''){
+      uni.showToast({
+        title: '请先登录',
+        icon: 'none'
+      });}
     if(btntext.value!='立即报名')return;
     // 执行报名逻辑，例如发送请求到后端
     // 这里只是一个示例，实际应用中需要根据后端接口进行相应处理

@@ -16,11 +16,9 @@ const tabBar = () => "../../components/tabBar.js";
 const _sfc_main = {
   __name: "index",
   setup(__props) {
-    const swiperList = common_vendor.ref([
-      {
-        image: "/static/index/post1.png"
-      }
-    ]);
+    const swiperList = common_vendor.ref([{
+      image: "/static/index/post1.png"
+    }]);
     const goToSearch = () => {
       common_vendor.index.navigateTo({
         url: "/pages/index/search"
@@ -140,6 +138,10 @@ const _sfc_main = {
     const filter = common_vendor.computed(() => {
       return awesome.value ? "" : "sticky-filter";
     });
+    const city = common_vendor.ref("不限");
+    const onRegionChange = (e) => {
+      city.value = e.detail.value[1];
+    };
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.f(swiperList.value, (item, index, i0) => {
@@ -176,18 +178,23 @@ const _sfc_main = {
           border: false,
           modelValue: single.value
         }),
-        k: common_vendor.t(filters.value[selectedFilter.value]),
-        l: common_vendor.p({
+        k: common_vendor.p({
+          type: "location"
+        }),
+        l: common_vendor.t(city.value),
+        m: common_vendor.o(onRegionChange),
+        n: common_vendor.t(filters.value[selectedFilter.value]),
+        o: common_vendor.p({
           type: "down"
         }),
-        m: filters.value,
-        n: common_vendor.o(onFilterChange),
-        o: common_vendor.n(filter.value),
-        p: common_vendor.f(activities, (activity, index, i0) => {
+        p: filters.value,
+        q: common_vendor.o(onFilterChange),
+        r: common_vendor.n(filter.value),
+        s: common_vendor.f(activities, (activity, index, i0) => {
           return {
             a: index,
             b: activity.id,
-            c: "1cf27b2a-4-" + i0,
+            c: "1cf27b2a-5-" + i0,
             d: common_vendor.p({
               id: activity.id,
               title: activity.title,
@@ -202,8 +209,8 @@ const _sfc_main = {
             })
           };
         }),
-        q: common_vendor.o(onScroll),
-        r: common_vendor.p({
+        t: common_vendor.o(onScroll),
+        v: common_vendor.p({
           selectedIndex: 0
         })
       });

@@ -30,15 +30,12 @@
   font-weight: 500;
 }
 .input-field.data-v-41388da8, .textarea-field.data-v-41388da8 {
-  width: 600rpx;
   padding: 20rpx;
   border: 2rpx solid #e9ecef;
   border-radius: 8rpx;
   font-size: 28rpx;
   color: #333;
-}
-.input-field.textarea-field.data-v-41388da8, .textarea-field.textarea-field.data-v-41388da8 {
-  height: 200rpx;
+  width: 95%;
 }
 .placeholder-style.data-v-41388da8 {
   color: #adb5bd;

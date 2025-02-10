@@ -1,86 +1,104 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
-  data() {
-    return {
-      images: [],
-      isSubmitting: false,
-      post: {
-        title: "",
-        content: ""
-      }
-    };
-  },
-  methods: {
-    async chooseImage() {
-      const remaining = 9 - this.images.length;
+  __name: "dynamic",
+  setup(__props) {
+    const images = common_vendor.ref([]);
+    const isSubmitting = common_vendor.ref(false);
+    const post = common_vendor.reactive({
+      title: "",
+      content: ""
+    });
+    common_vendor.ref(null);
+    const chooseImage = () => {
+      const remaining = 9 - images.value.length;
       common_vendor.index.chooseImage({
         count: remaining,
         sizeType: ["compressed"],
         sourceType: ["album"],
         success: (res) => {
-          this.images = [...this.images, ...res.tempFilePaths];
+          images.value.push(...res.tempFilePaths);
         }
       });
-    },
-    removeImage(index) {
-      this.images.splice(index, 1);
-    },
-    categoryChange(e) {
-      this.selectedCategoryIndex = e.detail.value;
-    },
-    async publishPost() {
-      if (this.isSubmitting)
+    };
+    const removeImage = (index) => {
+      images.value.splice(index, 1);
+    };
+    const userInfo = common_vendor.reactive({
+      avatar: "/static/dinohead.png",
+      nickname: "未登录用户",
+      phone: "1",
+      birthday: ""
+    });
+    common_vendor.onLoad(() => {
+      const stored = common_vendor.index.getStorageSync("userInfo");
+      if (stored) {
+        Object.assign(userInfo, stored);
+      }
+    });
+    const publishPost = async () => {
+      if (userInfo.phone == "") {
+        common_vendor.index.showToast({
+          title: "请先登录",
+          icon: "none"
+        });
         return;
-      if (!this.post.title.trim()) {
-        return common_vendor.index.showToast({ title: "请填写标题", icon: "none" });
       }
-      if (!this.post.content.trim()) {
-        return common_vendor.index.showToast({ title: "请填写内容", icon: "none" });
+      if (isSubmitting.value)
+        return;
+      if (!post.title.trim()) {
+        common_vendor.index.showToast({ title: "请填写标题", icon: "none" });
+        return;
       }
-      this.isSubmitting = true;
+      if (!post.content.trim()) {
+        common_vendor.index.showToast({ title: "请填写内容", icon: "none" });
+        return;
+      }
+      isSubmitting.value = true;
       try {
-        const res = await this.$myRequest({
+        common_vendor.index.__f__("log", "at pages/add/dynamic.vue:138", images.value.join(","));
+        const res = await common_vendor.index.request({
           method: "post",
           url: "/fatie",
-          data: {
-            ...this.post,
-            images: this.images.join(","),
-            userId: this.$store.state.user.id,
-            communityId: this.$store.state.communityId
-          }
+          data: JSON.stringify(
+            {
+              ...post,
+              images: images.value.join(","),
+              phone: userInfo.phone
+            }
+          )
         });
         common_vendor.index.showToast({ title: "发布成功", icon: "success" });
         setTimeout(() => common_vendor.index.navigateBack(), 1500);
       } catch (error) {
-        common_vendor.index.__f__("error", "at pages/add/dynamic.vue:125", "发布失败:", error);
+        common_vendor.index.__f__("error", "at pages/add/dynamic.vue:152", "发布失败:", error);
       } finally {
-        this.isSubmitting = false;
+        isSubmitting.value = false;
       }
-    }
+    };
+    return (_ctx, _cache) => {
+      return common_vendor.e({
+        a: post.title,
+        b: common_vendor.o(($event) => post.title = $event.detail.value),
+        c: post.content,
+        d: common_vendor.o(($event) => post.content = $event.detail.value),
+        e: common_vendor.f(images.value, (image, index, i0) => {
+          return {
+            a: image,
+            b: common_vendor.o(($event) => removeImage(index), index),
+            c: index
+          };
+        }),
+        f: images.value.length < 9
+      }, images.value.length < 9 ? {
+        g: common_vendor.o(chooseImage)
+      } : {}, {
+        h: common_vendor.t(userInfo.phone ? "立即发布" : "请先登录"),
+        i: common_vendor.o(publishPost)
+      });
+    };
   }
 };
-function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return common_vendor.e({
-    a: $data.post.title,
-    b: common_vendor.o(($event) => $data.post.title = $event.detail.value),
-    c: $data.post.content,
-    d: common_vendor.o(($event) => $data.post.content = $event.detail.value),
-    e: common_vendor.f($data.images, (image, index, i0) => {
-      return {
-        a: image,
-        b: common_vendor.o(($event) => $options.removeImage(index), index),
-        c: index
-      };
-    }),
-    f: $data.images.length < 9
-  }, $data.images.length < 9 ? {
-    g: common_vendor.o((...args) => $options.chooseImage && $options.chooseImage(...args))
-  } : {}, {
-    h: common_vendor.t($data.isSubmitting ? "发布中..." : "立即发布"),
-    i: common_vendor.o((...args) => $options.publishPost && $options.publishPost(...args))
-  });
-}
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-41388da8"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-41388da8"]]);
 wx.createPage(MiniProgramPage);
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/add/dynamic.js.map

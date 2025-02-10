@@ -22,6 +22,7 @@
       <!-- 内容输入 -->
       <view class="form-item content-item">
         <text class="item-label">内容</text>
+        <view class="textarea-container">
         <textarea 
           v-model="post.content" 
           class="textarea-field"
@@ -29,6 +30,7 @@
           placeholder-class="placeholder-style"
           auto-height
         />
+        </view>
       </view>
 
       <!-- 图片上传 -->
@@ -57,80 +59,102 @@
 </view>
     <!-- 发布按钮 -->
     <view class="submit-btn" @click="publishPost">
-      <text class="btn-text">{{ isSubmitting ? '发布中...' : '立即发布' }}</text>
+      <text class="btn-text">{{ userInfo.phone ? '立即发布' : '请先登录' }}</text>
     </view>
   </view>
   <br>
   <br>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      images: [],
-      isSubmitting: false,
-      post: {
-        title: '',
-        content: '',
-      },
-    };
-  },
-  methods: {
-    async chooseImage() {
-      const remaining = 9 - this.images.length;
-      uni.chooseImage({
-        count: remaining,
-        sizeType: ['compressed'],
-        sourceType: ['album'],
-        success: (res) => {
-          this.images = [...this.images, ...res.tempFilePaths];
-        }
-      });
-    },
-    removeImage(index) {
-      this.images.splice(index, 1);
-    },
-    categoryChange(e) {
-      this.selectedCategoryIndex = e.detail.value;
-    },
-    async publishPost() {
-      if (this.isSubmitting) return;
-      
-      // 表单验证
-      if (!this.post.title.trim()) {
-        return uni.showToast({ title: '请填写标题', icon: 'none' });
-      }
-      if (!this.post.content.trim()) {
-        return uni.showToast({ title: '请填写内容', icon: 'none' });
-      }
+<script setup>
+import { ref, reactive} from 'vue';
+import { onLoad } from '@dcloudio/uni-app';
 
-      this.isSubmitting = true;
-      
-      try {
-        const res = await this.$myRequest({
-          method: 'post',
-          url: '/fatie',
-          data: {
-            ...this.post,
-            images: this.images.join(','),
-            userId: this.$store.state.user.id,
-            communityId: this.$store.state.communityId
-          }
-        });
+const images = ref([]);
+const isSubmitting = ref(false);
+const post = reactive({
+  title: '',
+  content: '',
+});
 
-        uni.showToast({ title: '发布成功', icon: 'success' });
-        setTimeout(() => uni.navigateBack(), 1500);
-      } catch (error) {
-        console.error('发布失败:', error);
-      } finally {
-        this.isSubmitting = false;
-      }
+const selectedCategoryIndex = ref(null);
+
+const chooseImage = () => {
+  const remaining = 9 - images.value.length;
+  uni.chooseImage({
+    count: remaining,
+    sizeType: ['compressed'],
+    sourceType: ['album'],
+    success: (res) => {
+      images.value.push(...res.tempFilePaths);
     }
+  });
+};
+
+const removeImage = (index) => {
+  images.value.splice(index, 1);
+};
+
+const categoryChange = (e) => {
+  selectedCategoryIndex.value = e.detail.value;
+};
+// 用户信息
+const userInfo = reactive({
+  avatar: '/static/dinohead.png',
+  nickname: '未登录用户',
+  phone: '1',
+  birthday: ''
+});
+// 在页面初始化时读取
+onLoad(() => {
+  const stored = uni.getStorageSync('userInfo');
+  if (stored) {
+    Object.assign(userInfo, stored); // 保持响应式
+  }
+});
+
+const publishPost = async () => {
+  if(userInfo.phone==''){
+    uni.showToast({
+      title: '请先登录',
+      icon: 'none'
+    });
+    return;
+  }
+  if (isSubmitting.value) return;
+
+  if (!post.title.trim()) {
+    uni.showToast({ title: '请填写标题', icon: 'none' });
+    return;
+  }
+
+  if (!post.content.trim()) {
+    uni.showToast({ title: '请填写内容', icon: 'none' });
+    return;
+  }
+  isSubmitting.value = true;
+
+  try {
+    console.log(images.value.join(','));
+    const res = await uni.request({
+      method: 'post',
+      url: '/fatie',
+      data: JSON.stringify({
+        ...post,
+        images: images.value.join(','),
+        phone:userInfo.phone
+      }
+    )});
+    
+    uni.showToast({ title: '发布成功', icon: 'success' });
+    setTimeout(() => uni.navigateBack(), 1500);
+  } catch (error) {
+    console.error('发布失败:', error);
+  } finally {
+    isSubmitting.value = false;
   }
 };
 </script>
-
 <style lang="scss" scoped>
 .page-container {
   padding: 20rpx 30rpx;
@@ -166,15 +190,12 @@ export default {
 }
 
 .input-field, .textarea-field {
-  width: 600rpx;
   padding: 20rpx;
   border: 2rpx solid #e9ecef;
   border-radius: 8rpx;
   font-size: 28rpx;
   color: #333;
-  &.textarea-field {
-    height: 200rpx;
-  }
+  width: 95%;
 }
 
 .placeholder-style {

@@ -1,1 +1,1 @@
-{"version":3,"file":"assets.js","sources":["static/add.png"],"sourcesContent":["export default \"__VITE_ASSET__ffc6171b__\""],"names":[],"mappings":";AAAA,MAAe,aAAA;;"}
+{"version":3,"file":"assets.js","sources":["static/dinoundertreezoom.png","static/add.png"],"sourcesContent":["export default \"__VITE_ASSET__c8c3df42__\"","export default \"__VITE_ASSET__ffc6171b__\""],"names":[],"mappings":";AAAA,MAAe,eAAA;ACAf,MAAe,aAAA;;;"}

@@ -32,7 +32,7 @@
     height: 50rpx;
 }
 .date-picker {
-    width: 40%;
+    width: 30%;
 }
 .card-list {
     margin-top: 20rpx;

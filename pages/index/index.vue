@@ -37,22 +37,27 @@
       <view class="filter">
         <view class="date-picker"><uni-datetime-picker type="date" :clear-icon="false" v-model="single"
             :border="false" /></view>
+        <view class="city-picker">
+          <uni-icons type="location"></uni-icons>
+          <picker mode="region" @change="onRegionChange" level="city">{{city}}</picker>
+        </view>
         <picker mode="selector" :range="filters" @change="onFilterChange">
           {{ filters[selectedFilter] }}
           <uni-icons type="down"></uni-icons>
         </picker>
+
       </view>
     </view>
-
     <!-- 活动卡片 -->
     <scroll-view class="card-list">
       <ActivityCard v-for="(activity, index) in activities" :key="index" :id="activity.id" :title="activity.title"
         :price="activity.price" :address="activity.address" :date="activity.date" :time="activity.time"
         :status="activity.status" :participants="activity.participants" :plan="activity.plan" :tag="activity.tag" />
     </scroll-view>
+    <view style="height: 200rpx;"></view>
   </scroll-view>
-  
-  <mid-button/>
+ 
+  <mid-button />
   <tabBar :selectedIndex="0" />
 </template>
 
@@ -61,15 +66,17 @@
     ref,
     computed
   } from 'vue';
+  import {
+    onLoad
+  } from '@dcloudio/uni-app'
   import ActivityCard from '/components/card.vue';
   import MidButton from '/components/midbutton.vue';
   import tabBar from '/components/tabBar.vue';
 
   // 轮播图数据
   const swiperList = ref([{
-      image: '/static/index/post1.png'
-    }
-  ]);
+    image: '/static/index/post1.png'
+  }]);
   const goToSearch = () => {
     uni.navigateTo({
       url: '/pages/index/search' // 替换为你的搜索页面路径
@@ -85,7 +92,7 @@
   const single = ref(new Date().toISOString().split('T')[0]);
 
   // 下拉筛选条件
-  const filters = ref(['不限','萌新','中级','高级']);
+  const filters = ref(['不限', '萌新', '中级', '高级']);
   const selectedFilter = ref(0);
 
   // 筛选条件变化
@@ -203,6 +210,10 @@
   const filter = computed(() => {
     return awesome.value ? '' : 'sticky-filter';
   })
+  const city = ref('不限');
+  const onRegionChange = (e) => {
+    city.value = e.detail.value[1];
+  };
 </script>
 
 
@@ -304,11 +315,15 @@
   }
 
   .date-picker {
-    width: 40%;
+    width: 30%;
+  }
+  .city-picker{
+    width: 30%;
+    display: flex;
+    align-items: center;
   }
 
   .card-list {
     margin-top: 20rpx;
   }
-  
 </style>

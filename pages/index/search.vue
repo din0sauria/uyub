@@ -9,6 +9,10 @@
     <view class="filter">
       <view class="date-picker"><uni-datetime-picker type="date" :clear-icon="false" v-model="single" :border="false" />
       </view>
+      <view style="display: flex;width: 20%;">
+        <uni-icons type="location"></uni-icons>
+        <picker mode="region" @change="onRegionChange" level="city">{{city}}</picker>
+      </view>
       <picker mode="selector" :range="filters" @change="onFilterChange">
         {{ filters[selectedFilter] }}
         <uni-icons type="down"></uni-icons>
@@ -33,14 +37,17 @@
   const single = ref(new Date().toISOString().split('T')[0]);
 
   // 下拉筛选条件
-  const filters = ref(['不限','萌新','中级','高级']);
+  const filters = ['不限','萌新','中级','高级'];
   const selectedFilter = ref(0);
 
   // 筛选条件变化
   const onFilterChange = (e) => {
     selectedFilter.value = e.detail.value;
   };
-
+  const city = ref('不限');
+  const onRegionChange = (e) => {
+    city.value = e.detail.value[1];
+  };
   // 活动卡片数据
   const activities = [{
       id: '1',
@@ -165,7 +172,7 @@
   }
 
   .date-picker {
-    width: 40%;
+    width: 30%;
   }
 
   .card-list {

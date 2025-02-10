@@ -83,9 +83,13 @@
     height: 100%;
 }
 .date-picker.data-v-1cf27b2a {
-    width: 40%;
+    width: 30%;
+}
+.city-picker.data-v-1cf27b2a{
+    width: 30%;
+    display: flex;
+    align-items: center;
 }
 .card-list.data-v-1cf27b2a {
     margin-top: 20rpx;
 }
-  

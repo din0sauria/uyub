@@ -15,10 +15,14 @@ const _sfc_main = {
   __name: "search",
   setup(__props) {
     const single = common_vendor.ref((/* @__PURE__ */ new Date()).toISOString().split("T")[0]);
-    const filters = common_vendor.ref(["不限", "萌新", "中级", "高级"]);
+    const filters = ["不限", "萌新", "中级", "高级"];
     const selectedFilter = common_vendor.ref(0);
     const onFilterChange = (e) => {
       selectedFilter.value = e.detail.value;
+    };
+    const city = common_vendor.ref("不限");
+    const onRegionChange = (e) => {
+      city.value = e.detail.value[1];
     };
     const activities = [
       {
@@ -118,17 +122,22 @@ const _sfc_main = {
           border: false,
           modelValue: single.value
         }),
-        d: common_vendor.t(filters.value[selectedFilter.value]),
-        e: common_vendor.p({
+        d: common_vendor.p({
+          type: "location"
+        }),
+        e: common_vendor.t(city.value),
+        f: common_vendor.o(onRegionChange),
+        g: common_vendor.t(filters[selectedFilter.value]),
+        h: common_vendor.p({
           type: "down"
         }),
-        f: filters.value,
-        g: common_vendor.o(onFilterChange),
-        h: common_vendor.f(activities, (activity, index, i0) => {
+        i: filters,
+        j: common_vendor.o(onFilterChange),
+        k: common_vendor.f(activities, (activity, index, i0) => {
           return {
             a: index,
             b: activity.id,
-            c: "d746ad8e-3-" + i0,
+            c: "d746ad8e-4-" + i0,
             d: common_vendor.p({
               id: activity.id,
               title: activity.title,
