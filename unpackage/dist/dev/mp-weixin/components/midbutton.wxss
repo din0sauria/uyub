@@ -1,0 +1,44 @@
+
+.popup.data-v-473b7fc9 {
+  position: fixed;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600rpx;
+}
+.mid-button.data-v-473b7fc9 {
+  position: fixed;
+  bottom: 50rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100rpx;
+  height: 100rpx;
+  transition: transform 0.3s;
+  z-index: 999;
+}
+.mid-button.active.data-v-473b7fc9 {
+  transform: translateX(-50%) rotate(45deg);
+}
+.popup-content.data-v-473b7fc9 {
+  background: #fff;
+  padding: 10rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 24rpx;
+}
+.action-btn.data-v-473b7fc9 {
+  border-radius: 8rpx;
+  font-size: 32rpx;
+  line-height: 50rpx;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s;
+  background: #fff;
+}
+.action-btn.data-v-473b7fc9::after {
+  border: none;
+}

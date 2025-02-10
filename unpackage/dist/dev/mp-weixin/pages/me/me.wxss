@@ -1,0 +1,54 @@
+/* 水平间距 */
+/* 水平间距 */
+.container.data-v-19c123a7 {
+  padding: 30rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+.user-info.data-v-19c123a7 {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+}
+.user-info .avatar-section.data-v-19c123a7 {
+  position: relative;
+  margin-right: 40rpx;
+}
+.user-info .avatar-section .avatar.data-v-19c123a7 {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background-color: #eee;
+}
+.user-info .avatar-section .camera-icon.data-v-19c123a7 {
+  position: absolute;
+  right: -8rpx;
+  bottom: -8rpx;
+  background: white;
+  border-radius: 50%;
+  padding: 4rpx;
+}
+.user-info .info-section.data-v-19c123a7 {
+  display: flex;
+  flex-direction: column;
+}
+.user-info .info-section .nickname.data-v-19c123a7 {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+.user-info .info-section .phone.data-v-19c123a7, .user-info .info-section .birthday.data-v-19c123a7 {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 6rpx;
+}
+.login-section.data-v-19c123a7 {
+  margin: 40rpx 30rpx;
+}
+.login-section .login-btn.data-v-19c123a7 {
+  border-radius: 50rpx;
+  font-size: 32rpx;
+}
+.data-v-19c123a7 .uni-list-item__header {
+  margin-right: 16rpx;
+}

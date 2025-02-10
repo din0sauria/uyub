@@ -1,0 +1,66 @@
+
+.card.data-v-cc328a3d {
+    background: #fff;
+    padding: 20rpx;
+    margin: 20rpx;
+    border-radius: 10rpx;
+    font-size: 30rpx;
+    line-height: 30px;
+    box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+.title.data-v-cc328a3d {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10rpx;
+}
+.card-title.data-v-cc328a3d {
+    font-size: 36rpx;
+    font-weight: bold;
+}
+.card-price.data-v-cc328a3d {
+    font-size: 40rpx;
+    font-weight: bold;
+    color: #FF3B30;
+}
+.card-button.data-v-cc328a3d {
+  background: #00ffff; 
+  width: 200rpx;
+  margin: 0;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+  line-height: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx; 
+  border: none;
+}
+.card-button.data-v-cc328a3d::after {
+  border: none;
+}
+.line.data-v-cc328a3d{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10rpx;
+}
+.card-tag.data-v-cc328a3d{
+    color: #007AFF;
+    background-color: #aaffff;
+    border-radius: 5px;
+    line-height: 30px;
+    width: 50px;
+    text-align: center;
+}
+.avatar-container.data-v-cc328a3d {
+    width: 40px; /* 容器宽度 */
+    height: 40px; /* 容器高度 */
+    overflow: hidden; /* 隐藏超出部分 */
+    border-radius: 50%; /* 设置为圆形 */
+    margin-right: 10rpx;
+}
+.avatar.data-v-cc328a3d {
+    width: 100%; /* 图片宽度 */
+    height: 100%; /* 图片高度 */
+    object-fit: cover; /* 确保图片填充圆形区域 */
+}

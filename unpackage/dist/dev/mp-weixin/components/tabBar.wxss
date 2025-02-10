@@ -1,0 +1,30 @@
+/* 水平间距 */
+/* 水平间距 */
+.tab-bar.data-v-22586f07 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 -2rpx 20rpx rgba(0, 0, 0, 0.06);
+  z-index: 1;
+}
+.tab-bar .tab-bar-content.data-v-22586f07 {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100rpx;
+}
+.tab-bar .tab-bar-content .tab-item.data-v-22586f07 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.tab-bar .tab-bar-content .tab-item.active .text.data-v-22586f07 {
+  font-weight: bold;
+}
+.tab-bar .tab-bar-content .tab-item .text.data-v-22586f07 {
+  font-size: 22rpx;
+  margin-top: 6rpx;
+}

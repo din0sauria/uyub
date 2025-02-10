@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "mid-button": "../../components/midbutton",
+    "tab-bar": "../../components/tabBar"
+  }
+}

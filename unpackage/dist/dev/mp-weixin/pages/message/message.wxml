@@ -1,0 +1,1 @@
+<view></view><mid-button u-i="5e20d00a-0" bind:__l="__l"/><tab-bar wx:if="{{a}}" u-i="5e20d00a-1" bind:__l="__l" u-p="{{a}}"/>
