@@ -10,6 +10,7 @@ if (!Math) {
   "./pages/me/me.js";
   "./pages/dynamic/dynamic.js";
   "./pages/message/message.js";
+  "./pages/message/chat-window.js";
 }
 const _sfc_main = {
   onLaunch: function() {

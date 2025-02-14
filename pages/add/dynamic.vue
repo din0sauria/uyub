@@ -59,7 +59,7 @@
 </view>
     <!-- 发布按钮 -->
     <view class="submit-btn" @click="publishPost">
-      <text class="btn-text">{{ userInfo.phone ? '立即发布' : '请先登录' }}</text>
+      <text class="btn-text">{{ userInfo.userID ? '立即发布' : '请先登录' }}</text>
     </view>
   </view>
   <br>
@@ -102,7 +102,7 @@ const categoryChange = (e) => {
 const userInfo = reactive({
   avatar: '/static/dinohead.png',
   nickname: '未登录用户',
-  phone: '1',
+  userID: '',
   birthday: ''
 });
 // 在页面初始化时读取
@@ -114,7 +114,7 @@ onLoad(() => {
 });
 
 const publishPost = async () => {
-  if(userInfo.phone==''){
+  if(userInfo.userID==''){
     uni.showToast({
       title: '请先登录',
       icon: 'none'
@@ -142,7 +142,7 @@ const publishPost = async () => {
       data: JSON.stringify({
         ...post,
         images: images.value.join(','),
-        phone:userInfo.phone
+        userID:userInfo.userID
       }
     )});
     

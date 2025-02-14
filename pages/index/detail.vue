@@ -35,7 +35,7 @@
         <image :src="avatar" mode="aspectFill" class="avatar-image" />
       </view>
       <!-- 如果头像超过 8 个，显示 more-filled 图标 -->
-      <uni-icons type="more-filled" size="24"  />
+      <uni-icons type="more-filled" size="24"  v-if="hasMore"/>
     </view>
   </view>
     <!-- 组织方 -->
@@ -125,10 +125,10 @@ const btntext=computed(()=>{
   const activityex=activity.value;
 
   // 获取活动详情
-  // const fetchActivityDetail = async (id) => {
+  // const fetchActivityDetail = async (actID) => {
   //   try {
   //     const res = await uni.request({
-  //       url: `https://your-api-endpoint/activities/${id}`, // 后端接口
+  //       url: `https://your-api-endpoint/activities/${actID}`, // 后端接口
   //       method: 'GET'
   //     });
   //     activity.value = res.data; // 后端返回的数据
@@ -140,7 +140,7 @@ const btntext=computed(()=>{
   //   }
   // };
 const activities = [{
-      id: 1,
+      actID: 1,
       title: '星禾羽毛球运动中心',
       price: '¥50',
       address: '星禾羽毛球运动中心',
@@ -169,7 +169,7 @@ const activities = [{
           authorAvatar:'/static/dinohead.png'
     },
     {
-      id: 2,
+      actID: 2,
  title: '幸福林带冠深酷动力羽毛球馆',
     price: '¥60',
     address: '幸福林带冠深酷动力羽毛球馆',
@@ -198,7 +198,7 @@ const activities = [{
     authorAvatar:'/static/dinohead.png'
     },
     {
-      id: 3,
+      actID: 3,
       title: '西安奥体中心羽毛球馆',
       price: '¥50',
       address: '西安市国际港务区港丰路69号',
@@ -210,7 +210,7 @@ const activities = [{
       tags: '专业'
     },
     {
-      id: 4,
+      actID: 4,
       title: '新曈羽毛球训练中心',
       price: '¥60',
       address: '西安省体育馆BE中心',
@@ -222,7 +222,7 @@ const activities = [{
       tags: '专业'
     },
     {
-      id: 5,
+      actID: 5,
       title: '西安西北大学羽毛球馆',
       price: '¥10',
       address: '西安市太白北路229号西北大学校内',
@@ -234,7 +234,7 @@ const activities = [{
       tags: '休闲'
     },
     {
-      id: 6,
+      actID: 6,
       title: '朱雀羽毛球馆',
       price: '¥35',
       address: '西安市碑林区长安路北段14号',
@@ -246,7 +246,7 @@ const activities = [{
       tags: '专业'
     },
     {
-      id: 7,
+      actID: 7,
       title: '西安博蓝羽毛球馆',
       price: '免费',
       address: '西安市经济开发区凤城十路99号蓝天院内',
@@ -262,7 +262,7 @@ const activities = [{
     try {
       for (const res of activities) {
         // 如果活动 ID 匹配，则赋值给 activity 并返回
-        if (res.id == activityId) {
+        if (res.actID == activityId) {
           activity.value = res; // 找到匹配的活动，赋值给 activity
           return; // 找到后直接返回，避免继续循环
         }
@@ -282,7 +282,8 @@ const activities = [{
   // 页面加载时获取活动 ID 并请求数据
   onLoad((options) => {
     // 从 URL 参数中获取活动 ID
-    const activityId = options.id; // 从 URL 参数中获取活动 ID
+    const activityId = options.actID; // 从 URL 参数中获取活动 ID
+    //console.log(activityId);
     fetchActivityDetail(activityId);
   });
 
@@ -306,12 +307,18 @@ const activities = [{
 
   // 计算属性：只显示前 8 个头像
   const displayedAvatars = computed(() => {
-    return activity.value.avatars.slice(0, 8);
+    if (!activity.value.avatars)return [];
+    if (activity.value.avatars.length <= 8) {
+      return activity.value.avatars;
+    } else {
+      return activity.value.avatars.slice(0, 8);
+    }
   });
 
   // 计算属性：判断是否还有更多头像
   const hasMore = computed(() => {
-    return displayedAvatars.value.avatars.length > 8;
+    if (activity.value.avatars)return activity.value.avatars.length > 8;
+    else return false;
   });
 </script>
 

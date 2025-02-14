@@ -50,7 +50,7 @@
     </view>
     <!-- 活动卡片 -->
     <scroll-view class="card-list">
-      <ActivityCard v-for="(activity, index) in activities" :key="index" :id="activity.id" :title="activity.title"
+      <ActivityCard v-for="(activity, index) in activities" :key="index" :actID="activity.actID" :title="activity.title"
         :price="activity.price" :address="activity.address" :date="activity.date" :time="activity.time"
         :status="activity.status" :participants="activity.participants" :plan="activity.plan" :tag="activity.tag" />
     </scroll-view>
@@ -101,7 +101,7 @@
   };
 
   const activities = [{
-      id: '1',
+      actID: '1',
       title: '星禾羽毛球运动中心',
       price: '¥50',
       address: '星禾羽毛球运动中心',
@@ -113,7 +113,7 @@
       tag: '不限'
     },
     {
-      id: '2',
+      actID: '2',
       title: '幸福林带冠深酷动力羽毛球馆',
       price: '¥60',
       address: '幸福林带冠深酷动力羽毛球馆',
@@ -125,7 +125,7 @@
       tag: '高级'
     },
     {
-      id: '3',
+      actID: '3',
       title: '西安奥体中心羽毛球馆',
       price: '¥50',
       address: '西安市国际港务区港丰路69号',
@@ -137,7 +137,7 @@
       tag: '高级'
     },
     {
-      id: '4',
+      actID: '4',
       title: '新曈羽毛球训练中心',
       price: '¥60',
       address: '西安省体育馆BE中心',
@@ -149,7 +149,7 @@
       tag: '高级'
     },
     {
-      id: '5',
+      actID: '5',
       title: '西安西北大学羽毛球馆',
       price: '¥10',
       address: '西安市太白北路229号西北大学校内',
@@ -161,7 +161,7 @@
       tag: '中级'
     },
     {
-      id: '6',
+      actID: '6',
       title: '朱雀羽毛球馆',
       price: '¥35',
       address: '西安市碑林区长安路北段14号',
@@ -173,7 +173,7 @@
       tag: '高级'
     },
     {
-      id: '7',
+      actID: '7',
       title: '西安博蓝羽毛球馆',
       price: '免费',
       address: '西安市经济开发区凤城十路99号蓝天院内',

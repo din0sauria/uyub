@@ -27,7 +27,7 @@ const _sfc_main = {
     const userInfo = common_vendor.reactive({
       avatar: "/static/dinohead.png",
       nickname: "未登录用户",
-      phone: "1",
+      userID: "",
       birthday: ""
     });
     common_vendor.onLoad(() => {
@@ -37,7 +37,7 @@ const _sfc_main = {
       }
     });
     const publishPost = async () => {
-      if (userInfo.phone == "") {
+      if (userInfo.userID == "") {
         common_vendor.index.showToast({
           title: "请先登录",
           icon: "none"
@@ -64,7 +64,7 @@ const _sfc_main = {
             {
               ...post,
               images: images.value.join(","),
-              phone: userInfo.phone
+              userID: userInfo.userID
             }
           )
         });
@@ -93,7 +93,7 @@ const _sfc_main = {
       }, images.value.length < 9 ? {
         g: common_vendor.o(chooseImage)
       } : {}, {
-        h: common_vendor.t(userInfo.phone ? "立即发布" : "请先登录"),
+        h: common_vendor.t(userInfo.userID ? "立即发布" : "请先登录"),
         i: common_vendor.o(publishPost)
       });
     };

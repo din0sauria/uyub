@@ -1,38 +1,117 @@
-
-.message-list {
-    padding: 20px;
-    background-color: #f8f8f8;
+/* 水平间距 */
+/* 水平间距 */
+.layout.data-v-4c1b26cf {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #fff;
 }
-.message-item {
-    display: flex;
-    padding: 10px;
-    background-color: #fff;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #eee;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.layout .header.data-v-4c1b26cf {
+  padding: 40rpx;
+  background-color: #f8f8f8;
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: bold;
 }
-.message-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
+.layout .search-box.data-v-4c1b26cf {
+  margin: 3rpx auto;
+  width: 90%;
+  height: 80rpx;
+  line-height: 80rpx;
+  /* 确保 line-height 与 height 一致 */
+  padding-left: 20rpx;
+  /* 为输入框的左侧添加内边距 */
+  border: 3rpx solid gray;
+  border-radius: 40rpx;
+  box-shadow: 5rpx 5rpx #fff;
+  display: flex;
+  align-items: center;
+  /* 垂直居中 */
 }
-.message-content {
-    flex: 1;
-    margin-left: 10px;
+.layout .search-box .search-area.data-v-4c1b26cf {
+  flex-grow: 1;
 }
-.message-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
+.layout .search-box .search-icon.data-v-4c1b26cf {
+  margin-right: 10rpx;
 }
-.message-text {
-    font-size: 14px;
-    color: #666;
-    margin-top: 5px;
+.layout .message-list.data-v-4c1b26cf {
+  flex: 1;
+  padding: 10rpx;
+  padding-bottom: 100rpx;
+  box-sizing: border-box;
+  background-color: #fff;
 }
-.message-time {
-    margin-left: 10px;
-    font-size: 12px;
-    color: #999;
+.layout .message-list .notification.data-v-4c1b26cf {
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx 0;
+}
+.layout .message-list .notification .ntf-box.data-v-4c1b26cf {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+}
+.layout .message-list .notification .ntf-box .ntf-icon.data-v-4c1b26cf {
+  background-color: #f8f8f8;
+  border-radius: 40%;
+}
+.layout .message-list .notification .ntf-box .ntf-content.data-v-4c1b26cf {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  font-weight: 900rpx;
+}
+.layout .message-list .message-item.data-v-4c1b26cf {
+  display: flex;
+  align-items: center;
+  padding: 15rpx;
+}
+.layout .message-list .message-item .friend-avatar.data-v-4c1b26cf {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+  margin-bottom: 20rpx;
+}
+.layout .message-list .message-item .message-content.data-v-4c1b26cf {
+  flex: 1;
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #c8c8c8;
+}
+.layout .message-list .message-item .message-content .friend-name.data-v-4c1b26cf {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 10rpx;
+}
+.layout .message-list .message-item .message-content .last-message.data-v-4c1b26cf {
+  font-size: 28rpx;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.layout .message-list .message-item .time-and-unreadcount.data-v-4c1b26cf {
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 20rpx;
+  border-bottom: 1px solid #c8c8c8;
+}
+.layout .message-list .message-item .time-and-unreadcount .last-message-time.data-v-4c1b26cf {
+  margin-top: 10rpx;
+}
+.layout .message-list .message-item .time-and-unreadcount .unread-count.data-v-4c1b26cf {
+  width: 34rpx;
+  height: 34rpx;
+  background-color: #ff0000;
+  color: #fff;
+  font-size: 24rpx;
+  border-radius: 50%;
+  text-align: center;
 }

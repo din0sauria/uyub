@@ -48,7 +48,14 @@
       {
         "navigationStyle": "custom"
       }
-    }
+    },
+	{
+	  "path" : "pages/message/chat-window",
+	  "style" : 
+	  {
+	    "navigationStyle": "custom"
+	  }
+	}
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

@@ -11,7 +11,7 @@ if (!Math) {
 const _sfc_main = {
   __name: "card",
   props: {
-    id: String,
+    actID: String,
     // 活动 ID
     title: String,
     price: String,
@@ -30,7 +30,7 @@ const _sfc_main = {
     const props = __props;
     const onSignUp = () => {
       common_vendor.index.navigateTo({
-        url: `/pages/index/detail?id=${props.id}`
+        url: `/pages/index/detail?actID=${props.actID}`
       });
     };
     return (_ctx, _cache) => {

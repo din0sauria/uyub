@@ -31,7 +31,7 @@
   } from 'vue';
 
   const props = defineProps({
-    id: String, // 活动 ID
+    actID: String, // 活动 ID
     title: String,
     price: String,
     address: String,
@@ -44,15 +44,15 @@
     author: String,
     authorAvatar: String
   });
-  //https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png
+
   const emit = defineEmits(['sign-up']);
 
   // 报名按钮点击事件
   const onSignUp = () => {
-    //console.log(props.id);
-    //emit('sign-up', props.id); // 触发父组件的事件，并传递活动 ID
+    //console.log(props.actID);
+    //emit('sign-up', props.actID); // 触发父组件的事件，并传递活动 ID
     uni.navigateTo({
-      url: `/pages/index/detail?id=${props.id}`
+      url: `/pages/index/detail?actID=${props.actID}`
     });
   };
 </script>

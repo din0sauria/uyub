@@ -1,7 +1,7 @@
 {
   "navigationStyle": "custom",
   "usingComponents": {
-    "mid-button": "../../components/midbutton",
+    "uni-icons": "../../uni_modules/uni-icons/components/uni-icons/uni-icons",
     "tab-bar": "../../components/tabBar"
   }
 }

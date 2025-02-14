@@ -10,7 +10,7 @@
         </view>
         <view class="info-section">
           <text class="nickname">{{ userInfo.nickname }}</text>
-          <text class="phone" v-if="userInfo.phone">ID：{{ userInfo.phone }}</text>
+          <text class="phone" v-if="userInfo.userID">ID：{{ userInfo.userID }}</text>
           <text class="birthday" v-if="userInfo.birthday">生日：{{ userInfo.birthday }}</text>
         </view>
       </view>
@@ -27,7 +27,7 @@
         </view>
 
     <!-- 手机号登录按钮 -->
-    <view class="login-section" v-if="!userInfo.phone">
+    <view class="login-section" v-if="!userInfo.userID">
       <button 
         type="primary" 
         class="login-btn"
@@ -96,7 +96,7 @@ const handleGridClick = (item) => {
 const userInfo = reactive({
   avatar: '/static/dinohead.png',
   nickname: '未登录用户',
-  phone: '',
+  userID: '',
   birthday: ''
 });
 // 在页面初始化时读取
@@ -145,7 +145,7 @@ const decryptPhoneNumber = async (e) => {
     // });
     
     // 模拟解密成功
-    userInfo.phone = '12345678910';
+    userInfo.userID = '12345678910';
     userInfo.nickname = 'dinosaur';
     userInfo.birthday = '2000-01-01';
     uni.showToast({ title: '登录成功' });
@@ -161,7 +161,7 @@ const saveUserInfo = () => {
 const logout = () => {
   userInfo.avatar = '/static/dinohead.png';
   userInfo.nickname = '未登录用户';
-  userInfo.phone = '';
+  userInfo.userID = '';
   userInfo.birthday = '';
   uni.removeStorageSync('userInfo');
 };

@@ -52,7 +52,7 @@ const _sfc_main = {
     const userInfo = common_vendor.reactive({
       avatar: "/static/dinohead.png",
       nickname: "未登录用户",
-      phone: "",
+      userID: "",
       birthday: ""
     });
     common_vendor.onLoad(() => {
@@ -77,7 +77,7 @@ const _sfc_main = {
       if (e.detail.errMsg !== "getPhoneNumber:ok")
         return;
       try {
-        userInfo.phone = "12345678910";
+        userInfo.userID = "12345678910";
         userInfo.nickname = "dinosaur";
         userInfo.birthday = "2000-01-01";
         common_vendor.index.showToast({ title: "登录成功" });
@@ -92,7 +92,7 @@ const _sfc_main = {
     const logout = () => {
       userInfo.avatar = "/static/dinohead.png";
       userInfo.nickname = "未登录用户";
-      userInfo.phone = "";
+      userInfo.userID = "";
       userInfo.birthday = "";
       common_vendor.index.removeStorageSync("userInfo");
     };
@@ -110,9 +110,9 @@ const _sfc_main = {
         }),
         d: common_vendor.o(uploadAvatar),
         e: common_vendor.t(userInfo.nickname),
-        f: userInfo.phone
-      }, userInfo.phone ? {
-        g: common_vendor.t(userInfo.phone)
+        f: userInfo.userID
+      }, userInfo.userID ? {
+        g: common_vendor.t(userInfo.userID)
       } : {}, {
         h: userInfo.birthday
       }, userInfo.birthday ? {
@@ -131,8 +131,8 @@ const _sfc_main = {
             e: common_vendor.o(($event) => handleGridClick(item), index)
           };
         }),
-        k: !userInfo.phone
-      }, !userInfo.phone ? {
+        k: !userInfo.userID
+      }, !userInfo.userID ? {
         l: common_vendor.o(decryptPhoneNumber)
       } : {
         m: common_vendor.o(logout)

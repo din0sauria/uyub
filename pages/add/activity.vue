@@ -108,7 +108,7 @@
 
     <!-- 发布按钮 -->
     <view class="submit-btn" @click="publishActivity">
-      <text class="btn-text">{{ userInfo.phone ? '立即发布' : '请先登录' }}</text>
+      <text class="btn-text">{{ userInfo.userID ? '立即发布' : '请先登录' }}</text>
     </view>
   </view>
 </template>
@@ -200,7 +200,7 @@ const setOption = (e) => {
 const isSubmitting = ref(false);
 
 const publishActivity = async () => {
-  if (userInfo.phone === '') {
+  if (userInfo.userID === '') {
     uni.showToast({
       title: '请先登录',
       icon: 'none'
@@ -258,7 +258,7 @@ const publishActivity = async () => {
 const userInfo = reactive({
   avatar: '/static/dinohead.png',
   nickname: '未登录用户',
-  phone: '1',
+  userID: '',
   birthday: ''
 });
 

@@ -1,23 +1,30 @@
 # 数据格式说明
 
-## 首页活动列表/搜索活动列表
+## 首页活动列表/搜索页活动列表
 
 发送参数（以下代码仅供参考参数取值范围和数据类型）
 
 ```js
   // 活动类型 Tab
-  const tabs = ref(['羽毛球', '游戏', '乒乓球', '其他']);
+ // const tabs = ref(['羽毛球', '游戏', '乒乓球', '其他']);
 
   // 日期选择(默认今天)
-  const single = ref(new Date().toISOString().split('T')[0]);//yyyy-mm-dd
+ // const single = ref(new Date().toISOString().split('T')[0]);//yyyy-mm-dd
 
   // 下拉筛选条件
-  const filters = ref(['不限','萌新','中级','高级']);
+ // const filters = ref(['不限','萌新','中级','高级']);
 
   //用户ID（字符串）
-
   //查询字符串
   //会把城市塞到查询字符串里
+  {
+  tab:'羽毛球'
+  single:'yyyy-mm-dd'
+  filter:'不限'
+  userID:'123456789'
+  query:'西安'
+  
+  }
 ```
 
 希望接收按照以上条件筛选的列表，例如：
@@ -25,13 +32,13 @@
 ```js
 //类型说明
 const props = defineProps({
-  id: String, // 活动 ID
+  actID: String, // 活动 ID
   title: String,
   price: String,
   address: String,
   date: String,
   time: String,
-  status: String,
+  status: String,//包括正在报名，报名结束，已报名（根据用户ID查询）
   participants: Number,
   plan: Number,
   tag: String,
@@ -40,13 +47,13 @@ const props = defineProps({
 });
 ///举例
 const activities = [{
-      id: '1',
+      actID: '1',
       title: '星禾羽毛球运动中心',
       price: '¥50',
       address: '星禾羽毛球运动中心',
       date: '02月07日 周五',
       time: '19:00-22:00',
-      status: '正在报名',//包括正在报名，报名结束，已报名（根据用户手机号查询）
+      status: '正在报名',//包括正在报名，报名结束，已报名（根据用户ID查询）
       participants: 99,
       plan: 100,
       tag: '不限',
@@ -54,7 +61,7 @@ const activities = [{
       authorAvatar: String
     },
     {
-      id: '2',
+      actID: '2',
       title: '幸福林带冠深酷动力羽毛球馆',
       price: '¥60',
       address: '幸福林带冠深酷动力羽毛球馆',
@@ -73,13 +80,13 @@ const activities = [{
 
 ## 活动详情
 
-发送参数：活动id，用户手机号
+发送参数：活动actID，用户手机号
 
 返回活动详情，其中活动如下表示
 
 ```js
 const activity = ref({
-    id: 2,
+    actID: 2,
     title: '幸福林带冠深酷动力羽毛球馆',
     price: '¥60',
     address: '幸福林带冠深酷动力羽毛球馆',
@@ -112,7 +119,7 @@ const activity = ref({
 
 ## 活动报名
 
-发送参数：活动id，用户手机号
+发送参数：活动actID，用户手机号
 
 返回报名结果（成功/失败）
 
@@ -131,21 +138,125 @@ const activity = ref({
 ```js
 {
           title: '',
-          price: '',
-          address: '',
-          detailAddress: '',
-          date: '',
-          startTime: '',
-          endTime: '',
-          participants: '',
-          plan: '',
-          tag: '',
-          option:'',
-          description: '',
+          content: '',
           images:[],//图片urls
-          phone:''//用户ID
+          userID:''//用户ID
 }
 ```
+
+## 发布活动
+
+同样先发送图片，希望返回图片urls，然后发送以下内容
+
+```js
+{
+  title: '',
+  price: '',
+  address: '',
+  detailAddress: '',
+  date: '',
+  startTime: '',
+  endTime: '',
+  plan: '',
+  tag: '',
+  option: '',
+  description: '',
+  images:[],//图片urls
+  userID:''//用户ID
+});
+```
+
+## 动态列表
+
+发送userID（根据userID查询是否点赞）,返回动态列表
+
+```js
+{
+      dynamicID: 1,
+      avatar: '/static/dinohead.png',
+      nickname: '恐龙苯龙',
+      content: '今天天气真好，恐龙想CSltdd！',
+      images: [
+        '/static/dinoonsea.png',
+        '/static/csltdd.jpg',
+      ],
+      time: '1小时前',
+      isLiked: false,
+      likeCount: 156,
+      commentCount: 45,
+      commentList: ['ldd超市']
+    }
+```
+
+发送评论
+
+```js
+{
+      dynamicID: 1,
+      userID:'1'
+      comment: 'ldd超市'
+    }
+```
+
+发送点赞/取消点赞
+
+```js
+{
+      dynamicID: 1,
+      userID:'1'
+    }
+```
+
+## 消息列表
+
+发送userID,返回是否有好友申请。
+
+发送userID,返回消息列表。（unreadCount为上次发送获取消息详情请求后，此对话新增消息数）
+
+```js
+{
+      friendId: '2',
+      friendName: '小美',
+      friendAvatar: '/static/bse1.jpg',
+      lastMessage: '你好，我是彭于晏。',
+      lastMessageTime: '18:35',
+      unreadCount: 0,
+    }
+```
+
+## 消息详情
+
+发送userID,返回消息列表。（unreadCount为上次发送获取消息详情请求后，此对话新增消息数）
+
+```
+  // 消息列表
+  const messages = ref([{
+      content: '你好呀！',
+      isSelf: false
+    },
+    {
+      content: '你好，我是彭于晏。',
+      isSelf: true
+    },
+  ]);
+```
+
+发送消息
+
+```
+  // 消息列表
+  const messages = ref([{
+      content: '你好呀！',
+      isSelf: false
+    },
+    {
+      content: '你好，我是彭于晏。',
+      isSelf: true
+}])
+
+```
+
+## 我的
 
 ## 登录
 
@@ -169,7 +280,7 @@ const activity = ref({
     注：getPhoneNumber 返回的 code 与 wx.login 返回的 code 作用是不一样的，不能混用。
 ```
 
-第一种获得appID/第二种获得手机号，作为用户ID（phone）。
+第一种获得appID/第二种获得手机号，作为用户ID。
 
 希望返回以下内容
 
@@ -177,7 +288,7 @@ const activity = ref({
 const userInfo = reactive({
   avatar: '/static/dinohead.png',//(首次给默认值)
   nickname: '未设置昵称',//(首次给默认值)
-  phone: '12345678910',//ID
+  userID: '12345678910',//ID
   birthday: ''//yyyy-mm-dd(首次给默认值)
 });
 ```
@@ -186,4 +297,44 @@ const userInfo = reactive({
 
 ## 修改个人信息
 
-发送更改的`userInfo`，（用户ID（phone）不会修改），希望返回是否成功
+发送更改的`userInfo`，（用户ID（userID）不会修改）
+
+## 获取好友列表
+
+发送userID，返回好友列表
+
+```js
+[{
+  avatar: '/static/dinohead.png',
+  nickname: '未设置昵称',
+  friendId: '12345678910'}]
+```
+
+## 删除好友
+
+发送userID和好友ID
+
+## 我发布的活动
+
+发送userID，返回userID发布的活动列表（类似于首页活动列表）
+
+```
+{
+  actID: String, // 活动 ID
+  title: String,
+  price: String,
+  address: String,
+  date: String,
+  time: String,
+  status: String,
+  participants: Number,
+  plan: Number,
+  tag: String,
+  author: String,//昵称
+  authorAvatar: String//头像
+}
+```
+
+## 我参与的活动
+
+发送userID，返回userID报名的活动列表（类似于首页活动列表）
