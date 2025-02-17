@@ -14,7 +14,7 @@ const _sfc_main = {
     const userInfo = common_vendor.reactive({
       avatar: "/static/dinohead.jpg",
       nickname: "未登录用户",
-      phone: "",
+      userID: "",
       birthday: ""
     });
     common_vendor.onLoad(() => {
@@ -27,7 +27,7 @@ const _sfc_main = {
       if (activity.value.status != "正在报名")
         return activity.value.status;
       else
-        return userInfo.phone ? "立即报名" : "请先登录";
+        return userInfo.userID ? "立即报名" : "请先登录";
     });
     const activity = common_vendor.ref({
       id: 2,
@@ -190,14 +190,14 @@ const _sfc_main = {
             return;
           }
         }
-        common_vendor.index.__f__("log", "at pages/index/detail.vue:271", activityId);
+        common_vendor.index.__f__("log", "at pages/index/detail.vue:274", activityId);
         throw new Error("活动未找到");
       } catch (error) {
         common_vendor.index.showToast({
           title: "获取活动详情失败",
           icon: "error"
         });
-        common_vendor.index.__f__("error", "at pages/index/detail.vue:278", error);
+        common_vendor.index.__f__("error", "at pages/index/detail.vue:281", error);
       }
     };
     common_vendor.onLoad((options) => {
@@ -205,7 +205,7 @@ const _sfc_main = {
       fetchActivityDetail(activityId);
     });
     const handleSignUp = () => {
-      if (userInfo.phone == "") {
+      if (userInfo.userID == "") {
         common_vendor.index.showToast({
           title: "请先登录",
           icon: "none"

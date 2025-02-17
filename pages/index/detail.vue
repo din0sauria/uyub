@@ -20,7 +20,9 @@
     <!-- 活动时间 -->
     <view class="time"><text style="color: gray;">活动时间&emsp;</text>{{ activity.date }} {{ activity.time }}</view>
     <!-- 活动水平 -->
-    <view class="tag"><text style="color: gray;">活动水平&emsp;</text><view class="card-tag">{{ activity.tag||"不限" }}</view></view>
+    <view class="tag"><text style="color: gray;">活动水平&emsp;</text>
+      <view class="card-tag">{{ activity.tag||"不限" }}</view>
+    </view>
 
   </view>
   <!-- 活动状态 -->
@@ -35,32 +37,33 @@
         <image :src="avatar" mode="aspectFill" class="avatar-image" />
       </view>
       <!-- 如果头像超过 8 个，显示 more-filled 图标 -->
-      <uni-icons type="more-filled" size="24"  v-if="hasMore"/>
+      <uni-icons type="more-filled" size="24" v-if="hasMore" />
     </view>
   </view>
-    <!-- 组织方 -->
+  <!-- 组织方 -->
   <view class="author">
     <view>组织方</view>
     <view class="author-info">
       <image :src="activity.authorAvatar||activityex.authorAvatar" mode="aspectFill" class="author-avatar" />
       <text class="author-name">{{ activity.author|| activityex.author}}</text>
+    </view>
   </view>
-  </view>
-  
+
 
   <!-- 活动介绍 -->
-  <view class="intro"><view>活动介绍</view>
-  <view class="description" style="white-space:pre-line;">{{ activity.description||activityex.description }}</view>
-    
+  <view class="intro">
+    <view>活动介绍</view>
+    <view class="description" style="white-space:pre-line;">{{ activity.description||activityex.description }}</view>
+
   </view>
-  
- <view style="height: 200rpx;">
-   
- </view>
+
+  <view style="height: 200rpx;">
+
+  </view>
 
   <!-- 报名按钮 -->
   <view class="button-container">
-  <button class="button" @click="handleSignUp">{{btntext}}</button>
+    <button class="button" @click="handleSignUp">{{btntext}}</button>
   </view>
 </template>
 
@@ -74,24 +77,24 @@
   import {
     onLoad
   } from '@dcloudio/uni-app';
-// 用户信息
-const userInfo = reactive({
-  avatar: '/static/dinohead.jpg',
-  nickname: '未登录用户',
-  phone: '',
-  birthday: ''
-});
-// 在页面初始化时读取
-onLoad(() => {
-  const stored = uni.getStorageSync('userInfo');
-  if (stored) {
-    Object.assign(userInfo, stored); // 保持响应式
-  }
-});
-const btntext=computed(()=>{
-  if(activity.value.status!='正在报名') return activity.value.status;
-  else return userInfo.phone? '立即报名':'请先登录';
-})
+  // 用户信息
+  const userInfo = reactive({
+    avatar: '/static/dinohead.jpg',
+    nickname: '未登录用户',
+    userID: '',
+    birthday: ''
+  });
+  // 在页面初始化时读取
+  onLoad(() => {
+    const stored = uni.getStorageSync('userInfo');
+    if (stored) {
+      Object.assign(userInfo, stored); // 保持响应式
+    }
+  });
+  const btntext = computed(() => {
+    if (activity.value.status != '正在报名') return activity.value.status;
+    else return userInfo.userID ? '立即报名' : '请先登录';
+  })
   const activity = ref({
     id: 2,
     title: '幸福林带冠深酷动力羽毛球馆',
@@ -107,8 +110,8 @@ const btntext=computed(()=>{
     description: `人满可以报名等位，等位人数够4人会＋场地，加不上也会退费。
 免责声明:心脏病、高血压不宜打球，酒后严禁打球；如受伤或突发疾病本群不承担任何责任，报名视为同意声明。`,
     images: ["/static/dinoundertreezoom.jpg", "/static/dinohead.jpg"],
-    author:'羽动生活俱乐部',
-    avatars : [
+    author: '羽动生活俱乐部',
+    avatars: [
       '/static/c1.png',
       '/static/c2.png',
       '/static/c3.png',
@@ -119,10 +122,10 @@ const btntext=computed(()=>{
       '/static/c8.png',
       '/static/c9.png', // 超过 8 个
     ],
-    authorAvatar:'/static/dinohead.jpg'
-    
+    authorAvatar: '/static/dinohead.jpg'
+
   });
-  const activityex=activity.value;
+  const activityex = activity.value;
 
   // 获取活动详情
   // const fetchActivityDetail = async (actID) => {
@@ -139,12 +142,12 @@ const btntext=computed(()=>{
   //     });
   //   }
   // };
-const activities = [{
+  const activities = [{
       actID: 1,
       title: '星禾羽毛球运动中心',
       price: '¥50',
       address: '星禾羽毛球运动中心',
-      detailAddress:'陕西省西安市星禾羽毛球运动中心',
+      detailAddress: '陕西省西安市星禾羽毛球运动中心',
       date: '02月07日 周五',
       time: '19:00-22:00',
       status: '正在报名',
@@ -153,49 +156,49 @@ const activities = [{
       tags: '不限',
       description: `人满可以报名等位，等位人数够4人会＋场地，加不上也会退费。
       免责声明:心脏病、高血压不宜打球，酒后严禁打球；如受伤或突发疾病本群不承担任何责任，报名视为同意声明。`,
-          images: ["/static/dinoundertreezoom.jpg","/static/dinohead.jpg","/static/dinoonsea.jpg"],
-          author:'羽动生活俱乐部',
-          avatars : [
-            '/static/c1.png',
-            '/static/c2.png',
-            '/static/c3.png',
-            '/static/c4.png',
-            '/static/c5.png',
-            '/static/c6.png',
-            '/static/c7.png',
-            '/static/c8.png',
-            '/static/c9.png', // 超过 8 个
-          ],
-          authorAvatar:'/static/dinoundertreezoom.jpg'
+      images: ["/static/dinoundertreezoom.jpg", "/static/dinohead.jpg", "/static/dinoonsea.jpg"],
+      author: '羽动生活俱乐部',
+      avatars: [
+        '/static/c1.png',
+        '/static/c2.png',
+        '/static/c3.png',
+        '/static/c4.png',
+        '/static/c5.png',
+        '/static/c6.png',
+        '/static/c7.png',
+        '/static/c8.png',
+        '/static/c9.png', // 超过 8 个
+      ],
+      authorAvatar: '/static/dinoundertreezoom.jpg'
     },
     {
       actID: 2,
- title: '幸福林带冠深酷动力羽毛球馆',
-    price: '¥60',
-    address: '幸福林带冠深酷动力羽毛球馆',
-    detailAddress: '陕西省西安市新城区陕健康昆仑医院东南幸福林带冠深酷动力羽毛球馆',
-    date: '02月07日 周五',
-    time: '19:00-22:00',
-    status: '报名结束',
-    participants: 9,
-    plan: 10,
-    tags: '不限',
-    description: `人满可以报名等位，等位人数够4人会＋场地，加不上也会退费。
+      title: '幸福林带冠深酷动力羽毛球馆',
+      price: '¥60',
+      address: '幸福林带冠深酷动力羽毛球馆',
+      detailAddress: '陕西省西安市新城区陕健康昆仑医院东南幸福林带冠深酷动力羽毛球馆',
+      date: '02月07日 周五',
+      time: '19:00-22:00',
+      status: '报名结束',
+      participants: 9,
+      plan: 10,
+      tags: '不限',
+      description: `人满可以报名等位，等位人数够4人会＋场地，加不上也会退费。
 免责声明:心脏病、高血压不宜打球，酒后严禁打球；如受伤或突发疾病本群不承担任何责任，报名视为同意声明。`,
-    images: ["/static/dinoundertreezoom.jpg","/static/dinohead.jpg","/static/dinoonsea.jpg"],
-    author:'羽动生活俱乐部',
-    avatars : [
-      '/static/c1.png',
-      '/static/c2.png',
-      '/static/c3.png',
-      '/static/c4.png',
-      '/static/c5.png',
-      '/static/c6.png',
-      '/static/c7.png',
-      '/static/c8.png',
-      '/static/c9.png', // 超过 8 个
-    ],
-    authorAvatar:'/static/dinoundertreezoom.jpg'
+      images: ["/static/dinoundertreezoom.jpg", "/static/dinohead.jpg", "/static/dinoonsea.jpg"],
+      author: '羽动生活俱乐部',
+      avatars: [
+        '/static/c1.png',
+        '/static/c2.png',
+        '/static/c3.png',
+        '/static/c4.png',
+        '/static/c5.png',
+        '/static/c6.png',
+        '/static/c7.png',
+        '/static/c8.png',
+        '/static/c9.png', // 超过 8 个
+      ],
+      authorAvatar: '/static/dinoundertreezoom.jpg'
     },
     {
       actID: 3,
@@ -289,15 +292,16 @@ const activities = [{
 
   // 报名按钮点击事件
   const handleSignUp = () => {
-    if(userInfo.phone==''){
+    if (userInfo.userID == '') {
       uni.showToast({
         title: '请先登录',
         icon: 'none'
-      });}
-    if(btntext.value!='立即报名')return;
+      });
+    }
+    if (btntext.value != '立即报名') return;
     // 执行报名逻辑，例如发送请求到后端
     // 这里只是一个示例，实际应用中需要根据后端接口进行相应处理
-    activity.value.participants+=1; // 假设报名成功，活动人数加一
+    activity.value.participants += 1; // 假设报名成功，活动人数加一
     activity.value.status = '已报名'; // 更新活动状态
     uni.showToast({
       title: '报名成功',
@@ -307,7 +311,7 @@ const activities = [{
 
   // 计算属性：只显示前 8 个头像
   const displayedAvatars = computed(() => {
-    if (!activity.value.avatars)return [];
+    if (!activity.value.avatars) return [];
     if (activity.value.avatars.length <= 8) {
       return activity.value.avatars;
     } else {
@@ -317,7 +321,7 @@ const activities = [{
 
   // 计算属性：判断是否还有更多头像
   const hasMore = computed(() => {
-    if (activity.value.avatars)return activity.value.avatars.length > 8;
+    if (activity.value.avatars) return activity.value.avatars.length > 8;
     else return false;
   });
 </script>
@@ -358,12 +362,14 @@ const activities = [{
     margin-top: 20rpx;
     color: #fff;
   }
-  .tag{
+
+  .tag {
     display: flex;
     height: 40rpx;
     padding: 0;
   }
-  .card-tag{
+
+  .card-tag {
     color: #007AFF;
     background-color: #aaffff;
     border-radius: 5px;
@@ -371,9 +377,10 @@ const activities = [{
     width: 100rpx;
     height: 40rpx;
     text-align: center;
-    display:block
+    display: block
   }
-  .divider{
+
+  .divider {
     border: #eee 1rpx dotted;
   }
 
@@ -395,7 +402,7 @@ const activities = [{
     align-items: center;
   }
 
-  .avatar-item{
+  .avatar-item {
     width: 50rpx;
     height: 50rpx;
     border-radius: 50%;
@@ -406,7 +413,8 @@ const activities = [{
     width: 100%;
     height: 100%;
   }
-  .author{
+
+  .author {
     background-color: #fff;
     height: 100rpx;
     border-radius: 20rpx;
@@ -416,17 +424,20 @@ const activities = [{
     font-weight: bold;
     height: 150rpx;
   }
-  .author-avatar{
+
+  .author-avatar {
     width: 80rpx;
     height: 80rpx;
     border-radius: 50%;
   }
-  .author-info{
+
+  .author-info {
     margin: 20rpx;
     display: flex;
     align-items: center;
   }
-  .author-name{
+
+  .author-name {
     margin-left: 40rpx;
     font-size: 36rpx;
     font-weight: normal;
@@ -440,11 +451,13 @@ const activities = [{
     font-size: 36rpx;
     font-weight: bold;
   }
-  .description{
+
+  .description {
     font-weight: normal;
     margin-top: 10px;
   }
-  .button-container{
+
+  .button-container {
     position: fixed;
     bottom: 0;
     background-color: #fff;
@@ -464,6 +477,7 @@ const activities = [{
     border-radius: 50rpx;
     line-height: 100rpx;
   }
+
   .button::after {
     border: none;
   }

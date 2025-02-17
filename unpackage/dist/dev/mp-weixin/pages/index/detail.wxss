@@ -31,12 +31,12 @@
     margin-top: 20rpx;
     color: #fff;
 }
-.tag.data-v-9e4af262{
+.tag.data-v-9e4af262 {
     display: flex;
     height: 40rpx;
     padding: 0;
 }
-.card-tag.data-v-9e4af262{
+.card-tag.data-v-9e4af262 {
     color: #007AFF;
     background-color: #aaffff;
     border-radius: 5px;
@@ -44,9 +44,9 @@
     width: 100rpx;
     height: 40rpx;
     text-align: center;
-    display:block
+    display: block
 }
-.divider.data-v-9e4af262{
+.divider.data-v-9e4af262 {
     border: #eee 1rpx dotted;
 }
 .signUpinfo.data-v-9e4af262 {
@@ -64,7 +64,7 @@
     display: flex;
     align-items: center;
 }
-.avatar-item.data-v-9e4af262{
+.avatar-item.data-v-9e4af262 {
     width: 50rpx;
     height: 50rpx;
     border-radius: 50%;
@@ -74,7 +74,7 @@
     width: 100%;
     height: 100%;
 }
-.author.data-v-9e4af262{
+.author.data-v-9e4af262 {
     background-color: #fff;
     height: 100rpx;
     border-radius: 20rpx;
@@ -84,17 +84,17 @@
     font-weight: bold;
     height: 150rpx;
 }
-.author-avatar.data-v-9e4af262{
+.author-avatar.data-v-9e4af262 {
     width: 80rpx;
     height: 80rpx;
     border-radius: 50%;
 }
-.author-info.data-v-9e4af262{
+.author-info.data-v-9e4af262 {
     margin: 20rpx;
     display: flex;
     align-items: center;
 }
-.author-name.data-v-9e4af262{
+.author-name.data-v-9e4af262 {
     margin-left: 40rpx;
     font-size: 36rpx;
     font-weight: normal;
@@ -107,11 +107,11 @@
     font-size: 36rpx;
     font-weight: bold;
 }
-.description.data-v-9e4af262{
+.description.data-v-9e4af262 {
     font-weight: normal;
     margin-top: 10px;
 }
-.button-container.data-v-9e4af262{
+.button-container.data-v-9e4af262 {
     position: fixed;
     bottom: 0;
     background-color: #fff;
