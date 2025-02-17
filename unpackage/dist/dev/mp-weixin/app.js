@@ -11,6 +11,11 @@ if (!Math) {
   "./pages/dynamic/dynamic.js";
   "./pages/message/message.js";
   "./pages/message/chat-window.js";
+  "./pages/me/friend-manage.js";
+  "./pages/me/my-published.js";
+  "./pages/me/my-joined.js";
+  "./pages/me/feedback.js";
+  "./pages/me/about.js";
 }
 const _sfc_main = {
   onLaunch: function() {

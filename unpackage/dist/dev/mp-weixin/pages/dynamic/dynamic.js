@@ -16,11 +16,11 @@ const _sfc_main = {
     const dynamicList = common_vendor.ref([
       {
         dynamicID: 1,
-        avatar: "/static/dinohead.png",
+        avatar: "/static/dinohead.jpg",
         nickname: "恐龙苯龙",
         content: "今天天气真好，恐龙想CSltdd！",
         images: [
-          "/static/dinoonsea.png",
+          "/static/dinoonsea.jpg",
           "/static/csltdd.jpg"
         ],
         time: "1小时前",

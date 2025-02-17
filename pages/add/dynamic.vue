@@ -100,7 +100,7 @@ const categoryChange = (e) => {
 };
 // 用户信息
 const userInfo = reactive({
-  avatar: '/static/dinohead.png',
+  avatar: '/static/dinohead.jpg',
   nickname: '未登录用户',
   userID: '',
   birthday: ''

@@ -59,7 +59,7 @@
   const friend = ref({
     id: 1,
     name: '小美',
-    avatar: '/static/bse1.jpg',
+    avatar: '/static/lyt4.jpg',
   });
   const self = ref({
     name: '帅哥',

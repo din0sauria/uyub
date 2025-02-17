@@ -1,1 +1,0 @@
-{"version":3,"file":"dynamic.js","sources":["D:/HBuilderX/plugins/uniapp-cli-vite/uniPage:/cGFnZXMvYWRkL2R5bmFtaWMvZHluYW1pYy52dWU"],"sourcesContent":["import MiniProgramPage from 'E:/program/FrontEnd/uni/uyub/pages/add/dynamic/dynamic.vue'\nwx.createPage(MiniProgramPage)"],"names":[],"mappings":";;;;;;;AACA,GAAG,WAAW,eAAe;"}

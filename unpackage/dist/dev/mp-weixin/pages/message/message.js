@@ -16,7 +16,7 @@ const _sfc_main = {
       {
         friendId: 1,
         friendName: "小美",
-        friendAvatar: "/static/bse1.jpg",
+        friendAvatar: "/static/lyt4.jpg",
         lastMessage: "你好，我是彭于晏。",
         lastMessageTime: "18:35",
         unreadCount: 0
@@ -74,14 +74,6 @@ const _sfc_main = {
         friendName: "小萱",
         friendAvatar: "/static/lyt3.jpg",
         lastMessage: "好吧",
-        lastMessageTime: "星期一",
-        unreadCount: 0
-      },
-      {
-        friendId: 8,
-        friendName: "小琪",
-        friendAvatar: "/static/bse5.jpg",
-        lastMessage: "嗯嗯",
         lastMessageTime: "星期一",
         unreadCount: 0
       }

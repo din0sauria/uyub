@@ -39,8 +39,8 @@ const _sfc_main = {
         handler: () => navTo("feedback")
       },
       {
-        title: "联系客服",
-        icon: "phone",
+        title: "关于我们",
+        icon: "info",
         color: "#10AEFF",
         handler: () => navTo("about")
       }
@@ -50,7 +50,7 @@ const _sfc_main = {
         item.handler();
     };
     const userInfo = common_vendor.reactive({
-      avatar: "/static/dinohead.png",
+      avatar: "/static/dinohead.jpg",
       nickname: "未登录用户",
       userID: "",
       birthday: ""
@@ -90,7 +90,7 @@ const _sfc_main = {
       common_vendor.index.setStorageSync("userInfo", common_vendor.toRaw(userInfo));
     };
     const logout = () => {
-      userInfo.avatar = "/static/dinohead.png";
+      userInfo.avatar = "/static/dinohead.jpg";
       userInfo.nickname = "未登录用户";
       userInfo.userID = "";
       userInfo.birthday = "";

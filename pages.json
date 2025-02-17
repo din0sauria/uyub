@@ -39,14 +39,14 @@
       "path" : "pages/dynamic/dynamic",
       "style" : 
       {
-        "navigationStyle": "custom"
+        "navigationBarTitleText": "动态"
       }
     },
     {
       "path" : "pages/message/message",
       "style" : 
       {
-        "navigationStyle": "custom"
+        "navigationBarTitleText": "消息"
       }
     },
 	{
@@ -55,7 +55,42 @@
 	  {
 	    "navigationStyle": "custom"
 	  }
-	}
+	},
+  {
+    "path" : "pages/me/friend-manage",
+     "style" : 
+     {
+       "navigationBarTitleText": "好友管理"
+     }
+  },
+  {
+    "path" : "pages/me/my-published",
+    "style" : 
+    {
+      "navigationBarTitleText": "我发布的活动"
+    }
+  },
+  {
+    "path" : "pages/me/my-joined",
+    "style" : 
+    {
+      "navigationBarTitleText": "我参加的活动"
+    }
+  },
+  {
+    "path" : "pages/me/feedback",
+    "style" : 
+    {
+      "navigationBarTitleText": "反馈"
+    }
+  },
+  {
+    "path" : "pages/me/about",
+    "style" : 
+    {
+      "navigationBarTitleText": "关于"
+    }
+  }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

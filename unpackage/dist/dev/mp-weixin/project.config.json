@@ -21,24 +21,7 @@
   "libVersion": "3.7.7",
   "appid": "wx1fe000cec0d68a4e",
   "projectname": "uyub",
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": -1,
-      "list": []
-    }
-  },
+  "condition": {},
   "editorSetting": {
     "tabIndent": "auto",
     "tabSize": 2

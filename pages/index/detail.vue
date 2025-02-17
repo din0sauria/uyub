@@ -76,7 +76,7 @@
   } from '@dcloudio/uni-app';
 // 用户信息
 const userInfo = reactive({
-  avatar: '/static/dinohead.png',
+  avatar: '/static/dinohead.jpg',
   nickname: '未登录用户',
   phone: '',
   birthday: ''
@@ -106,7 +106,7 @@ const btntext=computed(()=>{
     tag: '不限',
     description: `人满可以报名等位，等位人数够4人会＋场地，加不上也会退费。
 免责声明:心脏病、高血压不宜打球，酒后严禁打球；如受伤或突发疾病本群不承担任何责任，报名视为同意声明。`,
-    images: ["/static/dinoundertreezoom.png", "/static/dinoonsea.png"],
+    images: ["/static/dinoundertreezoom.jpg", "/static/dinohead.jpg"],
     author:'羽动生活俱乐部',
     avatars : [
       '/static/c1.png',
@@ -119,7 +119,7 @@ const btntext=computed(()=>{
       '/static/c8.png',
       '/static/c9.png', // 超过 8 个
     ],
-    authorAvatar:'/static/dinohead.png'
+    authorAvatar:'/static/dinohead.jpg'
     
   });
   const activityex=activity.value;
@@ -153,7 +153,7 @@ const activities = [{
       tags: '不限',
       description: `人满可以报名等位，等位人数够4人会＋场地，加不上也会退费。
       免责声明:心脏病、高血压不宜打球，酒后严禁打球；如受伤或突发疾病本群不承担任何责任，报名视为同意声明。`,
-          images: ["/static/dinoundertreezoom.png", "/static/dinoonsea.png"],
+          images: ["/static/dinoundertreezoom.jpg","/static/dinohead.jpg","/static/dinoonsea.jpg"],
           author:'羽动生活俱乐部',
           avatars : [
             '/static/c1.png',
@@ -166,7 +166,7 @@ const activities = [{
             '/static/c8.png',
             '/static/c9.png', // 超过 8 个
           ],
-          authorAvatar:'/static/dinohead.png'
+          authorAvatar:'/static/dinoundertreezoom.jpg'
     },
     {
       actID: 2,
@@ -182,7 +182,7 @@ const activities = [{
     tags: '不限',
     description: `人满可以报名等位，等位人数够4人会＋场地，加不上也会退费。
 免责声明:心脏病、高血压不宜打球，酒后严禁打球；如受伤或突发疾病本群不承担任何责任，报名视为同意声明。`,
-    images: ["/static/dinoundertreezoom.png", "/static/dinoonsea.png"],
+    images: ["/static/dinoundertreezoom.jpg","/static/dinohead.jpg","/static/dinoonsea.jpg"],
     author:'羽动生活俱乐部',
     avatars : [
       '/static/c1.png',
@@ -195,7 +195,7 @@ const activities = [{
       '/static/c8.png',
       '/static/c9.png', // 超过 8 个
     ],
-    authorAvatar:'/static/dinohead.png'
+    authorAvatar:'/static/dinoundertreezoom.jpg'
     },
     {
       actID: 3,

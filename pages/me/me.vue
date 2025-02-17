@@ -1,5 +1,5 @@
 <template>
-  <view class="header"><image src="/static/dinoundertreezoom.png" mode="aspectFill" class="img"></image> </view>
+  <view class="header"><image src="/static/dinoundertreezoom.jpg" mode="aspectFill" class="img"></image> </view>
   <view class="container">
     <!-- 用户信息卡片 -->
     <view class="info">
@@ -81,8 +81,8 @@ const gridList = ref([
     handler: () => navTo('feedback')
   },
   { 
-    title: '联系客服', 
-    icon: 'phone',
+    title: '关于我们', 
+    icon: 'info',
     color: '#10AEFF',
     handler: () => navTo('about')
   }
@@ -94,7 +94,7 @@ const handleGridClick = (item) => {
 };
 // 用户信息
 const userInfo = reactive({
-  avatar: '/static/dinohead.png',
+  avatar: '/static/dinohead.jpg',
   nickname: '未登录用户',
   userID: '',
   birthday: ''
@@ -159,7 +159,7 @@ const saveUserInfo = () => {
   uni.setStorageSync('userInfo', toRaw(userInfo)); // 使用toRaw去除Proxy
 }
 const logout = () => {
-  userInfo.avatar = '/static/dinohead.png';
+  userInfo.avatar = '/static/dinohead.jpg';
   userInfo.nickname = '未登录用户';
   userInfo.userID = '';
   userInfo.birthday = '';

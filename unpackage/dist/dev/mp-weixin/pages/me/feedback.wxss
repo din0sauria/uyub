@@ -1,0 +1,76 @@
+/* 水平间距 */
+/* 水平间距 */
+.feedback-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx;
+  background-color: #f5f5f5;
+  height: 100vh;
+}
+.feedback-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 40rpx;
+}
+.form-container {
+  width: 100%;
+  max-width: 600rpx;
+  background: #fff;
+  padding: 40rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+.form-item {
+  margin-bottom: 30rpx;
+  display: flex;
+  flex-direction: column;
+}
+.label {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+.custom-select {
+  width: 100%;
+  border-radius: 10rpx;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+}
+.feedback-content {
+  width: 100%;
+  height: 200rpx;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  border-radius: 10rpx;
+  resize: none;
+}
+.contact-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  border-radius: 10rpx;
+}
+.submit-button {
+  width: 100%;
+  height: 80rpx;
+  margin-top: 40rpx;
+  background: #0077ff;
+  color: #fff;
+  font-size: 32rpx;
+  border: none;
+  border-radius: 40rpx;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+.submit-button:disabled {
+  background: #eee;
+  color: #aaa;
+  cursor: not-allowed;
+}
+.submit-button::after {
+  border: none;
+}

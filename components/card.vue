@@ -15,7 +15,7 @@
     </view>
     <view class="line">
       <view class="line">
-        <view class="avatar-container"><img class="avatar" :src="authorAvatar||'/static/dinohead.png'"></view>
+        <view class="avatar-container"><img class="avatar" :src="authorAvatar||'/static/dinohead.jpg'"></view>
         <text>&ensp;{{ author||"未知俱乐部" }}</text>
       </view>
 

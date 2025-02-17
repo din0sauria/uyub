@@ -1,9 +1,5 @@
 <template>
 
-  <!-- 标题栏 -->
-  <view
-    style="text-align: center;font-size: 40rpx;height: 100rpx;line-height: 100rpx ;font-weight: bold;position: fixed;top:0;z-index: 9;background-color: white;width: 100%;">
-    消息</view>
   <view class="layout">
     <!-- 搜索框 -->
     <view class="search-box">
@@ -66,7 +62,7 @@
   const messages = ref([{
       friendId: 1,
       friendName: '小美',
-      friendAvatar: '/static/bse1.jpg',
+      friendAvatar: '/static/lyt4.jpg',
       lastMessage: '你好，我是彭于晏。',
       lastMessageTime: '18:35',
       unreadCount: 0,
@@ -126,15 +122,7 @@
       lastMessage: '好吧',
       lastMessageTime: '星期一',
       unreadCount: 0,
-    },
-    {
-      friendId: 8,
-      friendName: '小琪',
-      friendAvatar: '/static/bse5.jpg',
-      lastMessage: '嗯嗯',
-      lastMessageTime: '星期一',
-      unreadCount: 0,
-    },
+    }
   ]);
 
 

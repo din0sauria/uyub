@@ -17,7 +17,7 @@ const _sfc_main = {
     const friend = common_vendor.ref({
       id: 1,
       name: "小美",
-      avatar: "/static/bse1.jpg"
+      avatar: "/static/lyt4.jpg"
     });
     const self = common_vendor.ref({
       name: "帅哥",

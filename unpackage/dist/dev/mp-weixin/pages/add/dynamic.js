@@ -25,7 +25,7 @@ const _sfc_main = {
       images.value.splice(index, 1);
     };
     const userInfo = common_vendor.reactive({
-      avatar: "/static/dinohead.png",
+      avatar: "/static/dinohead.jpg",
       nickname: "未登录用户",
       userID: "",
       birthday: ""

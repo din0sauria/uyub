@@ -1,11 +1,8 @@
 <template>
 
-  <view
-    style="text-align: center;font-size: 40rpx;height: 100rpx;line-height: 100rpx ;font-weight: bold;position: fixed;top:0;z-index: 9;background-color: white;width: 100%;">
-    动态</view>
   <!-- 朋友圈动态列表 -->
   <view class="container">
-    <scroll-view class="dynamic-list" scroll-y style="margin-top:100rpx ;">
+    <scroll-view class="dynamic-list" scroll-y>
       <view class="dynamic-item" v-for="(item, index) in dynamicList" :key="index">
         <!-- 用户头像和昵称 -->
         <view class="user-info">
@@ -54,11 +51,11 @@
   // 朋友圈数据
   const dynamicList = ref([{
       dynamicID: 1,
-      avatar: '/static/dinohead.png',
+      avatar: '/static/dinohead.jpg',
       nickname: '恐龙苯龙',
       content: '今天天气真好，恐龙想CSltdd！',
       images: [
-        '/static/dinoonsea.png',
+        '/static/dinoonsea.jpg',
         '/static/csltdd.jpg',
       ],
       time: '1小时前',

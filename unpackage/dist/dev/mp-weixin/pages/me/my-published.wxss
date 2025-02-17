@@ -1,0 +1,39 @@
+
+.sticky-box {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0rpx;
+    z-index: 5;
+    background-color: #fff;
+    /* 添加背景色 */
+    transition: all 0.5s ease-out;
+    display: block;
+    padding-top: 10rpx;
+    width: 100%;
+    height: 110rpx;
+}
+.sticky-search {
+    background-color: #efefef;
+    padding: 10rpx;
+    border-radius: 20rpx;
+    display: flex;
+    align-items: center;
+    margin-left: 50rpx;
+    width: 650rpx;
+    transition: all 0.5s ease-out;
+    height: 50rpx;
+}
+.filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10rpx;
+    height: 50rpx;
+}
+.date-picker {
+    width: 30%;
+}
+.card-list {
+    margin-top: 20rpx;
+}

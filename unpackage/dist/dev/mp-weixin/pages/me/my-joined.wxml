@@ -1,0 +1,1 @@
+<scroll-view class="card-list"><activity-card wx:for="{{a}}" wx:for-item="activity" wx:key="a" u-i="{{activity.b}}" bind:__l="__l" u-p="{{activity.c}}"/></scroll-view>

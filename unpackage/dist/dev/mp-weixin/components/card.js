@@ -53,7 +53,7 @@ const _sfc_main = {
         j: common_vendor.t(__props.participants),
         k: common_vendor.t(__props.plan),
         l: common_vendor.t(__props.tag),
-        m: __props.authorAvatar || "/static/dinohead.png",
+        m: __props.authorAvatar || "/static/dinohead.jpg",
         n: common_vendor.t(__props.author || "未知俱乐部"),
         o: common_vendor.o(onSignUp)
       };
