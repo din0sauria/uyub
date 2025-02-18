@@ -57,6 +57,13 @@
 	  }
 	},
   {
+    "path" : "pages/me/info-manage",
+     "style" : 
+     {
+       "navigationBarTitleText": "个人信息管理"
+     }
+  },
+  {
     "path" : "pages/me/friend-manage",
      "style" : 
      {

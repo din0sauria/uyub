@@ -31,10 +31,9 @@
       <button 
         type="primary" 
         class="login-btn"
-        open-type="getPhoneNumber" 
-        @getphonenumber="decryptPhoneNumber"
+        @click="handleWechatLogin"
       >
-        快速登录
+        微信快速登录
       </button>
     </view>
     <view class="login-section" v-else>
@@ -52,38 +51,64 @@
 
 <script setup>
 import { ref, reactive, toRaw } from 'vue';
-import { onLoad } from '@dcloudio/uni-app';
+import { onShow } from '@dcloudio/uni-app';
 import tabBar from '/components/tabBar.vue';
 // 在script部分添加宫格数据
 const gridList = ref([
+  {
+    title: '个人信息管理',
+    icon: 'person',
+    color: '#aa00ff',
+    handler: () => {
+      if (!userInfo.userID) {
+        uni.showToast({ title: '请先登录', icon: 'none' });
+        return;
+      }
+      navTo('info-manage')}
+  },
   { 
     title: '好友管理', 
-    icon: 'personadd',
+    icon: 'staff',
     color: '#007AFF',
-    handler: () => navTo('friend-manage')
+    handler: () => {
+      if (!userInfo.userID) {
+        uni.showToast({ title: '请先登录', icon: 'none' });
+        return;
+      }
+      navTo('friend-manage')}
   },
   { 
     title: '发布的活动', 
     icon: 'notification',
     color: '#4CD964',
-    handler: () => navTo('my-published')
+    handler: () => {
+      if (!userInfo.userID) {
+        uni.showToast({ title: '请先登录', icon: 'none' });
+        return;
+      }
+      navTo('my-published')}
   },
   { 
     title: '参与的活动', 
     icon: 'flag',
-    color: '#F0AD4E',
-    handler: () => navTo('my-joined')
+    color: '#ff0000',
+    handler: () => {
+      if (!userInfo.userID) {
+        uni.showToast({ title: '请先登录', icon: 'none' });
+        return;
+      }
+      navTo('my-joined')}
   },
   { 
     title: '建议反馈', 
     icon: 'help',
-    color: '#DD524D',
+    color: '#ff557f',
     handler: () => navTo('feedback')
   },
   { 
     title: '关于我们', 
     icon: 'info',
-    color: '#10AEFF',
+    color: '#ffaa00',
     handler: () => navTo('about')
   }
 ]);
@@ -99,8 +124,8 @@ const userInfo = reactive({
   userID: '',
   birthday: ''
 });
-// 在页面初始化时读取
-onLoad(() => {
+// 打开页面时读取本地存储的数据
+onShow(() => {
   const stored = uni.getStorageSync('userInfo');
   if (stored) {
     Object.assign(userInfo, stored); // 保持响应式
@@ -154,6 +179,45 @@ const decryptPhoneNumber = async (e) => {
     uni.showToast({ title: '登录失败', icon: 'none' });
   }
 };
+const handleWechatLogin = async () => {
+  if (userInfo.userID) return;
+  
+  try {
+    // // 1. 获取微信code
+    // const loginRes = await uni.login({
+    //   provider: 'weixin'
+    // });
+    
+    // // 2. 发送code到后端
+    // const { code } = loginRes;
+    // console.log(code);
+    // 实际开发中需要替换为你的后端接口
+    // const { data } = await uni.request({
+    //   url: '/api/wechat-login',
+    //   method: 'POST',
+    //   data: { code }
+    // });
+    
+    // // 3. 登录成功处理
+    // if(data.success) {
+    //   uni.showToast({ title: '登录成功' });
+    //   // 保存openid等必要信息
+    //   userInfo.userID = data.openid;
+    //   userInfo.nickname = data.nickname;
+    //   userInfo.birthday = data.birthday;
+    //   saveUserInfo();
+    // }
+    userInfo.userID = '12345678910';
+    userInfo.nickname = 'dinosaur';
+    userInfo.birthday = '2000-01-01';
+    uni.showToast({ title: '登录成功' });
+    saveUserInfo();
+  } catch (err) {
+    uni.showToast({ title: '登录失败', icon: 'none' });
+    console.log(err);
+  }
+};
+
 // 保存到本地
 const saveUserInfo = () => {
   uni.setStorageSync('userInfo', toRaw(userInfo)); // 使用toRaw去除Proxy

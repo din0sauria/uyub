@@ -15,33 +15,63 @@ const _sfc_main = {
   setup(__props) {
     const gridList = common_vendor.ref([
       {
+        title: "个人信息管理",
+        icon: "person",
+        color: "#aa00ff",
+        handler: () => {
+          if (!userInfo.userID) {
+            common_vendor.index.showToast({ title: "请先登录", icon: "none" });
+            return;
+          }
+          navTo("info-manage");
+        }
+      },
+      {
         title: "好友管理",
-        icon: "personadd",
+        icon: "staff",
         color: "#007AFF",
-        handler: () => navTo("friend-manage")
+        handler: () => {
+          if (!userInfo.userID) {
+            common_vendor.index.showToast({ title: "请先登录", icon: "none" });
+            return;
+          }
+          navTo("friend-manage");
+        }
       },
       {
         title: "发布的活动",
         icon: "notification",
         color: "#4CD964",
-        handler: () => navTo("my-published")
+        handler: () => {
+          if (!userInfo.userID) {
+            common_vendor.index.showToast({ title: "请先登录", icon: "none" });
+            return;
+          }
+          navTo("my-published");
+        }
       },
       {
         title: "参与的活动",
         icon: "flag",
-        color: "#F0AD4E",
-        handler: () => navTo("my-joined")
+        color: "#ff0000",
+        handler: () => {
+          if (!userInfo.userID) {
+            common_vendor.index.showToast({ title: "请先登录", icon: "none" });
+            return;
+          }
+          navTo("my-joined");
+        }
       },
       {
         title: "建议反馈",
         icon: "help",
-        color: "#DD524D",
+        color: "#ff557f",
         handler: () => navTo("feedback")
       },
       {
         title: "关于我们",
         icon: "info",
-        color: "#10AEFF",
+        color: "#ffaa00",
         handler: () => navTo("about")
       }
     ]);
@@ -55,7 +85,7 @@ const _sfc_main = {
       userID: "",
       birthday: ""
     });
-    common_vendor.onLoad(() => {
+    common_vendor.onShow(() => {
       const stored = common_vendor.index.getStorageSync("userInfo");
       if (stored) {
         Object.assign(userInfo, stored);
@@ -73,8 +103,8 @@ const _sfc_main = {
         common_vendor.index.showToast({ title: "上传失败", icon: "none" });
       }
     };
-    const decryptPhoneNumber = async (e) => {
-      if (e.detail.errMsg !== "getPhoneNumber:ok")
+    const handleWechatLogin = async () => {
+      if (userInfo.userID)
         return;
       try {
         userInfo.userID = "12345678910";
@@ -84,6 +114,7 @@ const _sfc_main = {
         saveUserInfo();
       } catch (err) {
         common_vendor.index.showToast({ title: "登录失败", icon: "none" });
+        common_vendor.index.__f__("log", "at pages/me/me.vue:217", err);
       }
     };
     const saveUserInfo = () => {
@@ -133,7 +164,7 @@ const _sfc_main = {
         }),
         k: !userInfo.userID
       }, !userInfo.userID ? {
-        l: common_vendor.o(decryptPhoneNumber)
+        l: common_vendor.o(handleWechatLogin)
       } : {
         m: common_vendor.o(logout)
       }, {

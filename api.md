@@ -99,7 +99,7 @@ const activity = ref({
     tag: '不限',
     description: `人满可以报名等位，等位人数够4人会＋场地，加不上也会退费。
 免责声明:心脏病、高血压不宜打球，酒后严禁打球；如受伤或突发疾病本群不承担任何责任，报名视为同意声明。`,
-    images: ["/static/dinoundertreezoom.png", "/static/dinoonsea.png"],
+    images: ["/static/dinoundertreezoom.jpg", "/static/dinoonsea.jpg"],
     author:'羽动生活俱乐部',
     avatars : [
       '/static/c1.png',
@@ -112,7 +112,8 @@ const activity = ref({
       '/static/c8.png',
       '/static/c9.png',
     ],
-    authorAvatar:'/static/dinohead.png'
+    authorAvatar:'/static/dinohead.jpg'
+    authorID:'666'
 
   });
 ```
@@ -173,11 +174,11 @@ const activity = ref({
 ```js
 {
       dynamicID: 1,
-      avatar: '/static/dinohead.png',
+      avatar: '/static/dinohead.jpg',
       nickname: '恐龙苯龙',
       content: '今天天气真好，恐龙想CSltdd！',
       images: [
-        '/static/dinoonsea.png',
+        '/static/dinoonsea.jpg',
         '/static/csltdd.jpg',
       ],
       time: '1小时前',
@@ -286,7 +287,7 @@ const activity = ref({
 
 ```js
 const userInfo = reactive({
-  avatar: '/static/dinohead.png',//(首次给默认值)
+  avatar: '/static/dinohead.jpg',//(首次给默认值)
   nickname: '未设置昵称',//(首次给默认值)
   userID: '12345678910',//ID
   birthday: ''//yyyy-mm-dd(首次给默认值)
@@ -299,16 +300,31 @@ const userInfo = reactive({
 
 发送更改的`userInfo`，（用户ID（userID）不会修改）
 
+## 获取新增好友列表
+
+发送userID，返回新增好友列表
+
+```js
+    [{
+      avatar: '/static/dinohead.jpg',
+      nickname: '未设置昵称',
+      friendId: '12345678910'}]
+```
+
 ## 获取好友列表
 
 发送userID，返回好友列表
 
 ```js
 [{
-  avatar: '/static/dinohead.png',
+  avatar: '/static/dinohead.jpg',
   nickname: '未设置昵称',
   friendId: '12345678910'}]
 ```
+
+## 添加好友
+
+发送userID和好友ID
 
 ## 删除好友
 
