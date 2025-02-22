@@ -45,7 +45,12 @@
     <view>组织方</view>
     <view class="author-info">
       <image :src="activity.authorAvatar||activityex.authorAvatar" mode="aspectFill" class="author-avatar" />
-      <text class="author-name">{{ activity.author|| activityex.author}}</text>
+      <view>
+      <view class="author-name">{{ activity.author|| activityex.author}}</view>
+      <view class="author-name" style="font-weight: normal;" @click="copytext">ID:&ensp;{{ activity.authorID||activityex.authorID }}
+      <text style="color: gray;font-weight: 100;">(点击复制)</text>
+      </view>
+      </view>
     </view>
   </view>
 
@@ -122,7 +127,8 @@
       '/static/c8.png',
       '/static/c9.png', // 超过 8 个
     ],
-    authorAvatar: '/static/dinohead.jpg'
+    authorAvatar: '/static/dinohead.jpg',
+    authorID: '1234567890'
 
   });
   const activityex = activity.value;
@@ -289,6 +295,18 @@
     //console.log(activityId);
     fetchActivityDetail(activityId);
   });
+  //
+  const copytext=()=>{
+    uni.setClipboardData({
+      data: activity.value.authorID||activityex.authorID,
+      success: function () {
+        uni.showToast({
+          title: 'ID已复制',
+          icon: 'success'
+        });
+      }
+    });
+  }
 
   // 报名按钮点击事件
   const handleSignUp = () => {
@@ -416,31 +434,29 @@
 
   .author {
     background-color: #fff;
-    height: 100rpx;
     border-radius: 20rpx;
     margin: 20rpx;
     padding: 30rpx;
     font-size: 36rpx;
     font-weight: bold;
-    height: 150rpx;
+    height: 160rpx;
   }
 
   .author-avatar {
-    width: 80rpx;
-    height: 80rpx;
+    width: 100rpx;
+    height: 100rpx;
     border-radius: 50%;
   }
 
   .author-info {
-    margin: 20rpx;
     display: flex;
     align-items: center;
   }
 
   .author-name {
-    margin-left: 40rpx;
-    font-size: 36rpx;
-    font-weight: normal;
+    margin:15rpx 40rpx;
+    font-size: 32rpx;
+    font-weight: bold;
   }
 
   .intro {

@@ -111,6 +111,7 @@
   }
 
   .feedback-title {
+    align-self: flex-start;
     font-size: 36rpx;
     font-weight: bold;
     color: #333;

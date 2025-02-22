@@ -1,26 +1,17 @@
 <template>
 
   <view class="layout">
-    <!-- 搜索框 -->
-    <view class="search-box">
-      <uni-icons class="search-icon" type="search" size="50rpx"></uni-icons>
-      <input class="search-area" v-model="searchKeyword" placeholder="搜索好友" />
-    </view>
 
     <!-- 好友列表 -->
     <scroll-view class="message-list" scroll-y>
       <view class="notification">
         <view class="ntf-box">
-          <uni-icons class="ntf-icon" type="chatbubble-filled" color="#00FFCC" size="96rpx"
-            @click="checkReply"></uni-icons>
-          <text class="ntf-content">收到回复</text>
+          <uni-icons class="ntf-icon" type="personadd-filled" color="#ffaa00" size="80rpx"
+            @click="addfriend"></uni-icons>
+          <text class="ntf-content">添加好友</text>
         </view>
         <view class="ntf-box">
-          <uni-icons class="ntf-icon" type="hand-up-filled" color="#FF6699" size="96rpx" @click="checkLike"></uni-icons>
-          <text class="ntf-content">收到喜欢</text>
-        </view>
-        <view class="ntf-box">
-          <uni-icons class="ntf-icon" type="personadd-filled" color="#00ffff" size="96rpx"
+          <uni-icons class="ntf-icon" type="staff-filled" color="#00aaff" size="80rpx"
             @click="checkNewFans"></uni-icons>
           <text class="ntf-content">好友申请</text>
         </view>
@@ -124,13 +115,17 @@
       unreadCount: 0,
     }
   ]);
-
+const addfriend = () => {
+  uni.navigateTo({
+    url: '/pages/message/add-friend'
+  });
+}
 
   // 跳转到聊天窗口
   const goToChatWindow = (message) => {
     uni.navigateTo({
-      //   url: `/pages/message/chat-window?id=${message.friendId}`,
-      url: '/pages/message/chat-window',
+        url: `/pages/message/chat-window?friendId=${message.friendId}&friendName=${message.friendName}&friendAvatar=${message.friendAvatar}`,
+      // url: '/pages/message/chat-window',
     });
   };
 
@@ -246,7 +241,7 @@
           flex-direction: column;
           justify-content: center;
           padding-bottom: 20rpx;
-          border-bottom: 1rpx solid #c8c8c8;
+          border-bottom: 1rpx solid #eee;
 
           .friend-name {
             font-size: 32rpx;
@@ -256,7 +251,7 @@
 
           .last-message {
             font-size: 28rpx;
-            color: #666;
+            color: #888;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -270,7 +265,7 @@
           justify-content: space-between;
           align-items: flex-end;
           padding-bottom: 20rpx;
-          border-bottom: 1px solid #c8c8c8;
+          border-bottom: 1px solid #eee;
 
           .last-message-time {
             margin-top: 10rpx;

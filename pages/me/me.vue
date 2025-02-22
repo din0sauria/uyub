@@ -124,7 +124,7 @@ const userInfo = reactive({
   userID: '',
   birthday: ''
 });
-// 打开页面时读取本地存储的数据
+// 展示页面时读取本地存储的数据
 onShow(() => {
   const stored = uni.getStorageSync('userInfo');
   if (stored) {
@@ -183,15 +183,15 @@ const handleWechatLogin = async () => {
   if (userInfo.userID) return;
   
   try {
-    // // 1. 获取微信code
-    // const loginRes = await uni.login({
-    //   provider: 'weixin'
-    // });
+    // 1. 获取微信code
+    const loginRes = await uni.login({
+      provider: 'weixin'
+    });
     
-    // // 2. 发送code到后端
-    // const { code } = loginRes;
-    // console.log(code);
-    // 实际开发中需要替换为你的后端接口
+    // 2. 发送code到后端
+    const { code } = loginRes;
+    console.log(code);
+    // 替换为后端接口
     // const { data } = await uni.request({
     //   url: '/api/wechat-login',
     //   method: 'POST',

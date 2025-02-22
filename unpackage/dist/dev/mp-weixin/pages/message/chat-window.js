@@ -14,37 +14,113 @@ const _sfc_main = {
     const {
       safeAreaInsets
     } = common_vendor.index.getSystemInfoSync();
-    const friend = common_vendor.ref({
-      id: 1,
-      name: "小美",
-      avatar: "/static/lyt4.jpg"
+    const chatRecords = {
+      "8": {
+        // 用户1的聊天记录
+        "1": [
+          // 与用户2的聊天记录
+          {
+            senderId: "1",
+            content: "你好！",
+            time: "2025-02-18T10:00:00"
+          },
+          {
+            senderId: "8",
+            content: "你好，我是彭于晏",
+            time: "2025-02-18T10:01:00"
+          }
+        ],
+        "3": [
+          // 与用户3的聊天记录
+          {
+            senderId: "1",
+            content: "嗨，最近怎么样？",
+            time: "2025-02-18T11:00:00"
+          }
+        ]
+      },
+      "2": {
+        // 用户2的聊天记录
+        "1": [
+          // 与用户1的聊天记录（与上面重复，但为了完整性保留）
+          {
+            senderId: "1",
+            content: "你好！",
+            time: "2025-02-18T10:00:00"
+          },
+          {
+            senderId: "2",
+            content: "你好，我是朋友",
+            time: "2025-02-18T10:01:00"
+          }
+        ]
+      },
+      "3": {
+        // 用户3的聊天记录
+        "1": [
+          // 与用户1的聊天记录
+          {
+            senderId: "1",
+            content: "嗨，最近怎么样？",
+            time: "2025-02-18T11:00:00"
+          }
+        ]
+      }
+    };
+    const myInfo = common_vendor.reactive({
+      avatar: "/static/pyy.jpeg",
+      nickname: "未登录用户",
+      userID: "8",
+      birthday: ""
     });
-    const self = common_vendor.ref({
-      name: "帅哥",
-      avatar: "/static/pyy.jpeg"
+    const friendInfo = common_vendor.reactive({
+      avatar: "",
+      nickname: "",
+      userID: ""
     });
+    const messages = common_vendor.ref([]);
+    common_vendor.onLoad((options) => {
+      const stored = common_vendor.index.getStorageSync("userInfo");
+      if (stored) {
+        Object.assign(myInfo, stored);
+      }
+      friendInfo.avatar = options.friendAvatar;
+      friendInfo.nickname = options.friendName;
+      friendInfo.userID = options.friendId;
+      const friendId = options.friendId;
+      const myId = myInfo.userID;
+      fetchChatHistory(friendId, myId);
+    });
+    const fetchChatHistory = async (friendId, myId) => {
+      try {
+        if (chatRecords[myId] && chatRecords[myId][friendId]) {
+          const chatHistory = chatRecords[myId][friendId];
+          messages.value = chatHistory.map((message) => ({
+            time: message.time,
+            content: message.content,
+            isSelf: message.senderId === myId
+            // 如果 senderId 等于 myId，则 isSelf 为 true
+          }));
+          common_vendor.index.__f__("log", "at pages/message/chat-window.vue:157", "聊天记录转换成功:", messages.value);
+        } else {
+          common_vendor.index.__f__("log", "at pages/message/chat-window.vue:159", "没有找到与该朋友的聊天记录");
+          messages.value = [];
+        }
+      } catch (error) {
+        common_vendor.index.__f__("error", "at pages/message/chat-window.vue:163", "获取聊天记录失败:", error);
+      }
+    };
     const goBack = () => {
       common_vendor.index.navigateBack();
     };
-    const messages = common_vendor.ref([
-      {
-        content: "你好呀！",
-        isSelf: false
-      },
-      {
-        content: "你好，我是彭于晏。",
-        isSelf: true
-      }
-    ]);
     const messageToSend = common_vendor.ref("");
     const toggle = common_vendor.ref(false);
-    const id = common_vendor.ref(messages.value[messages.value.length - 1].id);
     function onComfirm() {
       messages.value.push({
-        id: ++id.value,
         content: messageToSend.value,
         isSelf: true
       });
+      common_vendor.index.__f__("log", "at pages/message/chat-window.vue:194", messages);
       messageToSend.value = "";
     }
     function onFocus() {
@@ -62,16 +138,16 @@ const _sfc_main = {
           color: "gray"
         }),
         b: common_vendor.o(goBack),
-        c: common_vendor.t(friend.value.name),
+        c: common_vendor.t(friendInfo.nickname),
         d: ((_a = common_vendor.unref(safeAreaInsets)) == null ? void 0 : _a.top) + "px",
         e: common_vendor.f(messages.value, (msg, index, i0) => {
           return common_vendor.e({
             a: !msg.isSelf
           }, !msg.isSelf ? {
-            b: friend.value.avatar,
+            b: friendInfo.avatar,
             c: common_vendor.t(msg.content)
           } : {
-            d: self.value.avatar,
+            d: myInfo.avatar,
             e: common_vendor.t(msg.content)
           }, {
             f: msg.id
@@ -83,12 +159,14 @@ const _sfc_main = {
         i: messageToSend.value,
         j: common_vendor.o(($event) => messageToSend.value = $event.detail.value),
         k: toggle.value
-      }, toggle.value ? {} : {
-        l: common_vendor.p({
+      }, toggle.value ? {
+        l: common_vendor.o(onComfirm)
+      } : {
+        m: common_vendor.p({
           type: "fire",
           size: "30"
         }),
-        m: common_vendor.p({
+        n: common_vendor.p({
           type: "plus",
           size: "30"
         })

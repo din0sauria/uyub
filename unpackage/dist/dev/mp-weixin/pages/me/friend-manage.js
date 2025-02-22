@@ -31,6 +31,11 @@ const _sfc_main = {
         common_vendor.index.showToast({ title: "加载失败", icon: "none" });
       }
     };
+    const addfriend = () => {
+      common_vendor.index.navigateTo({
+        url: "/pages/message/add-friend"
+      });
+    };
     const deleteFriend = async (friendId) => {
       try {
         friendList.value = friendList.value.filter((f) => f.friendId !== friendId);
@@ -56,17 +61,18 @@ const _sfc_main = {
     });
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.f(friendList.value, (friend, index, i0) => {
+        a: common_vendor.o(addfriend),
+        b: common_vendor.f(friendList.value, (friend, index, i0) => {
           return {
             a: friend.avatar || "/static/default-avatar.png",
             b: common_vendor.t(friend.nickname || "未命名用户"),
             c: common_vendor.t(friend.friendId),
-            d: "6fd3c8f1-0-" + i0,
+            d: "c53bda83-0-" + i0,
             e: common_vendor.o(($event) => handleDelete(friend), friend.friendId),
             f: friend.friendId
           };
         }),
-        b: common_vendor.p({
+        c: common_vendor.p({
           type: "trash",
           size: "30",
           color: "#ff4444"
@@ -75,5 +81,6 @@ const _sfc_main = {
     };
   }
 };
-wx.createPage(_sfc_main);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-c53bda83"]]);
+wx.createPage(MiniProgramPage);
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/me/friend-manage.js.map

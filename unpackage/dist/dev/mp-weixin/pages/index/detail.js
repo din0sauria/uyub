@@ -57,7 +57,8 @@ const _sfc_main = {
         "/static/c9.png"
         // 超过 8 个
       ],
-      authorAvatar: "/static/dinohead.jpg"
+      authorAvatar: "/static/dinohead.jpg",
+      authorID: "1234567890"
     });
     const activityex = activity.value;
     const activities = [
@@ -190,20 +191,31 @@ const _sfc_main = {
             return;
           }
         }
-        common_vendor.index.__f__("log", "at pages/index/detail.vue:274", activityId);
+        common_vendor.index.__f__("log", "at pages/index/detail.vue:280", activityId);
         throw new Error("活动未找到");
       } catch (error) {
         common_vendor.index.showToast({
           title: "获取活动详情失败",
           icon: "error"
         });
-        common_vendor.index.__f__("error", "at pages/index/detail.vue:281", error);
+        common_vendor.index.__f__("error", "at pages/index/detail.vue:287", error);
       }
     };
     common_vendor.onLoad((options) => {
       const activityId = options.actID;
       fetchActivityDetail(activityId);
     });
+    const copytext = () => {
+      common_vendor.index.setClipboardData({
+        data: activity.value.authorID || activityex.authorID,
+        success: function() {
+          common_vendor.index.showToast({
+            title: "ID已复制",
+            icon: "success"
+          });
+        }
+      });
+    };
     const handleSignUp = () => {
       if (userInfo.userID == "") {
         common_vendor.index.showToast({
@@ -276,9 +288,11 @@ const _sfc_main = {
       } : {}, {
         q: activity.value.authorAvatar || common_vendor.unref(activityex).authorAvatar,
         r: common_vendor.t(activity.value.author || common_vendor.unref(activityex).author),
-        s: common_vendor.t(activity.value.description || common_vendor.unref(activityex).description),
-        t: common_vendor.t(btntext.value),
-        v: common_vendor.o(handleSignUp)
+        s: common_vendor.t(activity.value.authorID || common_vendor.unref(activityex).authorID),
+        t: common_vendor.o(copytext),
+        v: common_vendor.t(activity.value.description || common_vendor.unref(activityex).description),
+        w: common_vendor.t(btntext.value),
+        x: common_vendor.o(handleSignUp)
       });
     };
   }

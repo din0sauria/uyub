@@ -3,6 +3,7 @@
     <!-- 标题栏 -->
     <view class="header">
       <text class="title">我的好友</text>
+      <button class="add" @click="addfriend">添加好友</button>
     </view>
 
     <!-- 好友列表 -->
@@ -66,7 +67,11 @@ const fetchFriends = async () => {
     uni.showToast({ title: '加载失败', icon: 'none' });
   }
 };
-
+const addfriend = () => {
+  uni.navigateTo({
+    url: '/pages/message/add-friend'
+  });
+}
 // 删除好友
 const deleteFriend = async (friendId) => {
   try {
@@ -104,7 +109,7 @@ onLoad(() => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container {
   padding: 24rpx;
   background-color: #f5f5f5;
@@ -113,10 +118,24 @@ onLoad(() => {
 
 .header {
   padding: 32rpx 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width:100%;
   .title {
     font-size: 36rpx;
     font-weight: 600;
     color: #333;
+  }
+  .add{
+    height: 60rpx;
+    margin: 0;
+    font-size: 26rpx;
+    line-height: 60rpx;
+    color: #fff;
+    background-color: #007aff;
+    border-radius: 8rpx;
+    box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
   }
 }
 

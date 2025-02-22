@@ -107,6 +107,11 @@ const _sfc_main = {
       if (userInfo.userID)
         return;
       try {
+        const loginRes = await common_vendor.index.login({
+          provider: "weixin"
+        });
+        const { code } = loginRes;
+        common_vendor.index.__f__("log", "at pages/me/me.vue:193", code);
         userInfo.userID = "12345678910";
         userInfo.nickname = "dinosaur";
         userInfo.birthday = "2000-01-01";

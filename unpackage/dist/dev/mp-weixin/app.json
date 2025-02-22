@@ -9,6 +9,7 @@
     "pages/dynamic/dynamic",
     "pages/message/message",
     "pages/message/chat-window",
+    "pages/message/add-friend",
     "pages/me/info-manage",
     "pages/me/friend-manage",
     "pages/me/my-published",

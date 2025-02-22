@@ -1,238 +1,292 @@
 <template>
-  <view class="chat-window">
-    <!-- 标题栏 -->
-    <view class="header" :style="{paddingTop:safeAreaInsets?.top + 'px'}">
-      <view class="icon-back" @click="goBack">
-        <uni-icons type="left" size="24" color="gray"></uni-icons>
-      </view>
-      <text class="friend-name">{{ friend.name }}</text>
-    </view>
+	<view class="chat-container">
+		<!-- 标题栏 -->
+		<view class="header" :style="{ paddingTop: safeAreaInsets?.top + 'px' }">
+			<view class="nav-back" @click="goBack">
+				<uni-icons type="left" size="24" color="#333"></uni-icons>
+				<text class="friend-name">{{ friendInfo.nickname }}</text>
+			</view>
+		</view>
 
-    <!-- 消息列表 -->
-    <scroll-view class="message-list" scroll-y>
-      <view v-for="(msg, index) in messages" :key="msg.id" class="message-item">
-        <!-- 对方消息 -->
-        <view v-if="!msg.isSelf" class="message-friend">
-          <image class="avatar-friend" :src="friend.avatar" mode="aspectFill"></image>
-          <view class="message-content-friend-text">
-            {{msg.content}}
-          </view>
-        </view>
+		<!-- 消息列表 -->
+		<scroll-view 
+			class="message-area" 
+			scroll-y
+			:scroll-with-animation="true"
+			:scroll-top="scrollTop"
+		>
+			<view 
+				v-for="(msg, index) in messages" 
+				:key="index" 
+				class="message-bubble"
+				:class="{ 'self-message': msg.isSelf }"
+			>
+				<image 
+					class="user-avatar"
+					:src="msg.isSelf ? myInfo.avatar : friendInfo.avatar"
+					mode="aspectFill"
+				/>
+				<view class="content-box">
+					<text class="message-text">{{ msg.content }}</text>
+				</view>
+			</view>
+			<view class="scroll-anchor"></view>
+		</scroll-view>
 
-
-        <!-- 自己消息 -->
-        <view v-else class="message-self">
-          <image class="avatar-self" :src="self.avatar" mode="aspectFill"></image>
-          <view class="message-content-self-text">{{msg.content}}</view>
-        </view>
-    </view>
-        <!-- 占位元素，用于滚动到底部 -->
-        <view id="last-msg-item" style="height: 1px;"></view>
-    </scroll-view>
-
-    <!-- 输入框 -->
-    <view class="input-container">
-      <textarea class="input-box" v-model="messageToSend" placeholder="请输入内容" @focus="onFocus" @blur="onBlur"
-        @confirm="onComfirm"></textarea>
-      <button class="send" v-if="toggle">
-        发送
-      </button>
-      <template v-else>
-        <uni-icons class="emoji" type="fire" size="30"></uni-icons>
-        <uni-icons class="more" type="plus" size="30"></uni-icons>
-      </template>
-    </view>
-  </view>
+		<!-- 输入框 -->
+		<view class="input-area" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
+			<textarea
+				class="message-input"
+				v-model="messageToSend"
+				placeholder="输入消息..."
+				:adjust-position="false"
+				@confirm="sendMessage"
+			/>
+			<button 
+				class="send-button" 
+				:class="{ 'disabled': !messageToSend.trim() }" 
+				@click="sendMessage"
+			>
+				发送
+			</button>
+		</view>
+	</view>
 </template>
 
 <script setup>
-  import {
-    ref,
-    onMounted
-  } from 'vue';
+import { ref, reactive, nextTick } from 'vue';
+import { onLoad } from '@dcloudio/uni-app';
 
-  const {
-    safeAreaInsets
-  } = uni.getSystemInfoSync()
+const { safeAreaInsets } = uni.getSystemInfoSync();
 
-  // 获取路由参数
-  const friend = ref({
-    id: 1,
-    name: '小美',
-    avatar: '/static/lyt4.jpg',
-  });
-  const self = ref({
-    name: '帅哥',
-    avatar: '/static/pyy.jpeg',
-  });
-  const goBack = () => {
-    uni.navigateBack()
-  }
-  // 消息列表
-  const messages = ref([{
-      content: '你好呀！',
-      isSelf: false
-    },
-    {
-      content: '你好，我是彭于晏。',
-      isSelf: true
-    },
-  ]);
+// 用户信息
+const myInfo = reactive({
+	avatar: '/static/pyy.jpeg',
+	nickname: '未登录用户',
+	userID: '8'
+});
 
-  // 输入框内容
-  const messageToSend = ref('');
+const friendInfo = reactive({
+	avatar: '',
+	nickname: '',
+	userID: ''
+});
 
-  const toggle = ref(false);
+// 消息相关
+const messages = ref([]);
+const messageToSend = ref('');
+const scrollTop = ref(0);
 
-  const id = ref(messages.value[messages.value.length - 1].id);
+// 初始化加载
+onLoad((options) => {
+	const stored = uni.getStorageSync('userInfo');
+	if (stored) Object.assign(myInfo, stored);
+	
+	friendInfo.avatar = options.friendAvatar || '/static/default-avatar.png';
+	friendInfo.nickname = options.friendName || '未命名用户';
+	friendInfo.userID = options.friendId;
+	
+	loadHistoryMessages(options.friendId, myInfo.userID);
+});
 
-  function onComfirm() {
-    messages.value.push({
-      id: ++id.value,
-      content: messageToSend.value,
-      isSelf: true
-    })
-    messageToSend.value = '';
-  }
+// 加载历史消息
+const loadHistoryMessages = (friendId, myId) => {
+	try {
+		const chatHistory = chatRecords[myId]?.[friendId] || [];
+		messages.value = chatHistory.map(msg => ({
+			content: msg.content,
+			isSelf: msg.senderId === myId
+		}));
+		scrollToBottom();
+	} catch (error) {
+		console.error("加载历史消息失败:", error);
+	}
+};
 
-  function onFocus() {
-    toggle.value = true;
-  }
+// 发送消息
+const sendMessage = () => {
+	const content = messageToSend.value.trim();
+	if (!content) return;
 
-  function onBlur() {
-    toggle.value = false;
-  }
+	messages.value.push({
+		content: content,
+		isSelf: true
+	});
+	
+	messageToSend.value = '';
+	scrollToBottom();
+};
+
+// 滚动到底部
+const scrollToBottom = () => {
+	nextTick(() => {
+		scrollTop.value = Math.random();
+	});
+};
+
+const goBack = () => {
+	uni.navigateBack();
+};
+
+// 模拟数据
+const chatRecords = {
+"8": { // 用户1的聊天记录
+			"1": [ // 与用户2的聊天记录
+				{
+					senderId: "1",
+					content: "你好！",
+				},
+				{
+					senderId: "8",
+					content: "你好，我是彭于晏",		
+				}
+			],
+			"3": [ // 与用户3的聊天记录
+				{
+					senderId: "1",
+					content: "嗨，最近怎么样？",
+				}
+			]
+		},
+		"2": { // 用户2的聊天记录
+			"1": [ // 与用户1的聊天记录（与上面重复，但为了完整性保留）
+				{
+					senderId: "1",
+					content: "你好！",
+				},
+				{
+					senderId: "2",
+					content: "你好，我是朋友",
+				}
+			]
+		},
+		"3": { // 用户3的聊天记录
+			"1": [ // 与用户1的聊天记录
+				{
+					senderId: "1",
+					content: "嗨，最近怎么样？",
+				}
+			]
+		}
+};
 </script>
 
 <style lang="scss" scoped>
-  .chat-window {
+.chat-container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	background: #f0f2f5;
+
+	.header {
+		background: #fff;
+    height: 100rpx;
+		box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
     display: flex;
-    flex-direction: column;
-    height: 100vh;
-    position: relative;
+    align-items: center;
+		.nav-back {
+			display: flex;
+			align-items: center;
+			padding: 16rpx 24rpx;
+			
+			.friend-name {
+        margin-left: 16rpx;
+				font-size: 34rpx;
+				font-weight: 500;
+				color: #333;
+			}
+		}
+	}
 
-    .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 90rpx;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid #eee;
-      z-index: 2;
+	.message-area {
+		flex: 1;
+		overflow-anchor: auto;
 
-      /* 返回图标 */
-      .back-icon {
-        margin-left: 30rpx;
-        /* 距离左边界的距离 */
-      }
+		.message-bubble {
+			margin: 24rpx 20rpx;
+			display: flex;
+			align-items: flex-start;
+			max-width: 80%;
 
-      /* 好友名字 */
-      .friend-name {
-        flex: 1;
-        /* 占据剩余空间 */
-        text-align: center;
-        /* 文字居中 */
-        font-size: 34rpx;
-        font-weight: 500;
-        color: #333;
-        padding-right: 60rpx;
-        /* 避免文字被返回图标挤压 */
-      }
-    }
+			.user-avatar {
+				flex-shrink: 0;
+				width: 64rpx;
+				height: 64rpx;
+				border-radius: 8rpx;
+				margin-right: 16rpx;
+			}
 
-    .message-list {
-      padding-top: 200rpx;
-      /* 为导航栏留出空间 */
-      padding-bottom: 60rpx;
-      /* 为输入框留出空间 */
-      flex: 1;
+			.content-box {
+				padding: 16rpx 24rpx;
+				background: #fff;
+				border-radius: 12rpx;
+				box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+				.message-text {
+					font-size: 30rpx;
+					line-height: 1.4;
+					color: #333;
+				}
+			}
 
-      .message-item {
-        margin: 20rpx;
-        padding: 10rpx 0;
+			&.self-message {
+				flex-direction: row-reverse;
+				margin-left: auto;
+				
+				.user-avatar {
+					margin-left: 16rpx;
+					margin-right: 0;
+				}
+				
+				.content-box {
+					background: #07c160;
+					.message-text {
+						color: #fff;
+					}
+				}
+			}
+		}
 
-        .message-friend {
-          display: flex;
-          flex-direction: row;
+		.scroll-anchor {
+			height: 1rpx;
+			visibility: hidden;
+		}
+	}
 
-          .avatar-friend {
-            width: 80rpx;
-            height: 80rpx;
-            border-radius: 40rpx;
-            margin-left: 20rpx;
-          }
+	.input-area {
+		background: #fff;
+		padding: 20rpx 24rpx;
+		display: flex;
+		align-items: center;
+		border-top: 1rpx solid #eee;
+		box-shadow: 0 -4rpx 12rpx rgba(0, 0, 0, 0.03);
 
-          .message-content-friend-text {
-            max-width: 80%;
-            padding: 8rpx 16rpx;
-            margin-left: 25rpx;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #fff;
-            border-radius: 30rpx;
-            color: #000;
-          }
-        }
+		.message-input {
+			flex: 1;
+			min-height: 80rpx;
+			max-height: 200rpx;
+			padding: 16rpx 24rpx;
+			margin-right: 20rpx;
+			background: #f8f8f8;
+			border-radius: 40rpx;
+			font-size: 30rpx;
+			line-height: 1.4;
+		}
 
-        .message-self {
-          display: flex;
-          flex-direction: row-reverse;
+		.send-button {
+			width: 140rpx;
+			height: 80rpx;
+			line-height: 80rpx;
+			background: #07c160;
+			color: #fff;
+			font-size: 30rpx;
+			border-radius: 40rpx;
+			transition: all 0.2s;
 
-          .avatar-self {
-            width: 80rpx;
-            height: 80rpx;
-            border-radius: 40rpx;
-            margin-right: 20rpx;
-          }
-
-          .message-content-self-text {
-            max-width: 80%;
-            padding: 8rpx 16rpx;
-            margin-right: 25rpx;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #2d65f7;
-            border-radius: 30rpx;
-            color: #fff;
-          }
-        }
-      }
-    }
-
-    .input-container {
-      display: flex;
-      align-items: center;
-      padding: 20rpx 0;
-      background: rgba(255, 255, 255, 0.8);
-      padding-bottom: 35rpx;
-
-      .input-box {
-        flex: 1;
-        height: 60rpx;
-        padding: 16rpx;
-        padding-bottom: 0rpx;
-        border: 2.5rpx solid black;
-        border-radius: 40rpx;
-        margin: 0 30rpx;
-        background: rgba(255, 255, 255, 0.5);
-      }
-
-      .emoji,
-      .more {
-        width: 50rpx;
-        height: 50rpx;
-        margin-right: 20rpx;
-      }
-
-      .send {
-        margin-right: 30rpx;
-        background-color: aqua;
-      }
-    }
-  }
+			&.disabled {
+				background: #ccc;
+				opacity: 0.7;
+			}
+		}
+	}
+}
 </style>

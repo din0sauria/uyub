@@ -26,8 +26,10 @@ const _sfc_main = {
         time: "1小时前",
         isLiked: false,
         likeCount: 156,
-        commentCount: 45,
-        commentList: []
+        commentList: [{
+          commentor: "ltdd",
+          content: "不是哥们"
+        }]
       },
       {
         dynamicID: 2,
@@ -38,7 +40,7 @@ const _sfc_main = {
         time: "2小时前",
         isLiked: false,
         likeCount: 99,
-        commentCount: 23
+        commentList: []
       },
       {
         dynamicID: 3,
@@ -49,54 +51,86 @@ const _sfc_main = {
         time: "3小时前",
         isLiked: false,
         likeCount: 248,
-        commentCount: 32
+        commentList: []
       }
     ]);
-    function onLike(item) {
-      item.isLiked = !item.isLiked;
-      if (item.isLiked) {
-        item.likeCount += 1;
+    function onLike(dynamicItem) {
+      dynamicItem.isLiked = !dynamicItem.isLiked;
+      if (dynamicItem.isLiked) {
+        dynamicItem.likeCount += 1;
       } else {
-        item.likeCount -= 1;
+        dynamicItem.likeCount -= 1;
       }
     }
-    function onComment() {
+    function onComment(dynamicItem) {
+      common_vendor.index.showModal({
+        title: "发表评论",
+        showCancel: true,
+        editable: true,
+        // 显示输入框
+        placeholderText: "请输入评论内容",
+        success: (res) => {
+          if (res.confirm) {
+            const commentContent = res.content.trim();
+            if (commentContent) {
+              const stored = common_vendor.index.getStorageSync("userInfo");
+              dynamicItem.commentList.push({
+                commentor: stored.nickname,
+                content: commentContent
+              });
+              common_vendor.index.__f__("log", "at pages/dynamic/dynamic.vue:129", dynamicItem.commentList);
+            } else {
+              common_vendor.index.showToast({
+                title: "评论内容不能为空",
+                icon: "none"
+              });
+            }
+          }
+        }
+      });
     }
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.f(dynamicList.value, (item, index, i0) => {
+        a: common_vendor.f(dynamicList.value, (dynamicItem, dynamicIndex, i0) => {
           return common_vendor.e({
-            a: item.avatar,
-            b: common_vendor.t(item.nickname),
-            c: common_vendor.t(item.content),
-            d: item.images && item.images.length > 0
-          }, item.images && item.images.length > 0 ? {
-            e: common_vendor.f(item.images, (img, imgIndex, i1) => {
+            a: dynamicItem.avatar,
+            b: common_vendor.t(dynamicItem.nickname),
+            c: common_vendor.t(dynamicItem.content),
+            d: dynamicItem.images && dynamicItem.images.length > 0
+          }, dynamicItem.images && dynamicItem.images.length > 0 ? {
+            e: common_vendor.f(dynamicItem.images, (img, imgIndex, i1) => {
               return {
                 a: imgIndex,
                 b: img
               };
             })
           } : {}, {
-            f: common_vendor.t(item.time),
-            g: common_vendor.o(($event) => onLike(item), index),
+            f: common_vendor.t(dynamicItem.time),
+            g: common_vendor.o(($event) => onLike(dynamicItem), dynamicItem.dynamicID),
             h: "e73567d5-0-" + i0,
             i: common_vendor.p({
-              type: item.isLiked ? "hand-up-filled" : "hand-up",
-              size: "30",
-              color: "rgb(41, 121, 255)"
+              type: dynamicItem.isLiked ? "hand-up-filled" : "hand-up",
+              size: "35",
+              color: "rgb(20, 20, 20)"
             }),
-            j: common_vendor.t(item.likeCount),
-            k: common_vendor.o(onComment, index),
+            j: common_vendor.t(dynamicItem.likeCount),
+            k: common_vendor.o(($event) => onComment(dynamicItem), dynamicItem.dynamicID),
             l: "e73567d5-1-" + i0,
-            m: common_vendor.t(item.commentCount),
-            n: index
+            m: common_vendor.t(dynamicItem.commentList.length),
+            n: common_vendor.f(dynamicItem.commentList, (commentItem, commentIndex, i1) => {
+              return {
+                a: common_vendor.t(commentItem.commentor),
+                b: common_vendor.t(commentItem.content),
+                c: commentIndex
+              };
+            }),
+            o: dynamicItem.dynamicID
           });
         }),
         b: common_vendor.p({
           type: "chat",
-          size: "30",
-          color: "rgb(41, 121, 255)"
+          size: "35",
+          color: "rgb(20, 20, 20)"
         }),
         c: common_vendor.p({
           selectedIndex: 1

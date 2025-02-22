@@ -78,10 +78,15 @@ const _sfc_main = {
         unreadCount: 0
       }
     ]);
+    const addfriend = () => {
+      common_vendor.index.navigateTo({
+        url: "/pages/message/add-friend"
+      });
+    };
     const goToChatWindow = (message) => {
       common_vendor.index.navigateTo({
-        //   url: `/pages/message/chat-window?id=${message.friendId}`,
-        url: "/pages/message/chat-window"
+        url: `/pages/message/chat-window?friendId=${message.friendId}&friendName=${message.friendName}&friendAvatar=${message.friendAvatar}`
+        // url: '/pages/message/chat-window',
       });
     };
     const searchKeyword = common_vendor.ref("");
@@ -90,39 +95,23 @@ const _sfc_main = {
         (message) => message.friendName.includes(searchKeyword.value)
       );
     });
-    function checkReply() {
-    }
-    function checkLike() {
-    }
     function checkNewFans() {
     }
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.p({
-          type: "search",
-          size: "50rpx"
-        }),
-        b: searchKeyword.value,
-        c: common_vendor.o(($event) => searchKeyword.value = $event.detail.value),
-        d: common_vendor.o(checkReply),
-        e: common_vendor.p({
-          type: "chatbubble-filled",
-          color: "#00FFCC",
-          size: "96rpx"
-        }),
-        f: common_vendor.o(checkLike),
-        g: common_vendor.p({
-          type: "hand-up-filled",
-          color: "#FF6699",
-          size: "96rpx"
-        }),
-        h: common_vendor.o(checkNewFans),
-        i: common_vendor.p({
+        a: common_vendor.o(addfriend),
+        b: common_vendor.p({
           type: "personadd-filled",
-          color: "#00ffff",
-          size: "96rpx"
+          color: "#ffaa00",
+          size: "80rpx"
         }),
-        j: common_vendor.f(filteredMessages.value, (message, k0, i0) => {
+        c: common_vendor.o(checkNewFans),
+        d: common_vendor.p({
+          type: "staff-filled",
+          color: "#00aaff",
+          size: "80rpx"
+        }),
+        e: common_vendor.f(filteredMessages.value, (message, k0, i0) => {
           return common_vendor.e({
             a: message.friendAvatar,
             b: common_vendor.t(message.friendName),
@@ -133,11 +122,11 @@ const _sfc_main = {
             f: common_vendor.t(message.unreadCount)
           } : {}, {
             g: message.friendId,
-            h: common_vendor.o(($event) => goToChatWindow(), message.friendId)
+            h: common_vendor.o(($event) => goToChatWindow(message), message.friendId)
           });
         }),
-        k: common_vendor.sr("tabBarRef", "4c1b26cf-4"),
-        l: common_vendor.p({
+        f: common_vendor.sr("tabBarRef", "4c1b26cf-2"),
+        g: common_vendor.p({
           selectedIndex: 2
         })
       };

@@ -7156,9 +7156,9 @@ function initOnError() {
   };
 }
 function initRuntimeSocketService() {
-  const hosts = "192.168.254.1,192.168.142.1,10.135.23.144,127.0.0.1";
+  const hosts = "192.168.254.1,192.168.142.1,10.138.161.107,127.0.0.1";
   const port = "8090";
-  const id = "mp-weixin_bt507b";
+  const id = "mp-weixin_LzhDxv";
   const lazy = typeof swan !== "undefined";
   let restoreError = lazy ? () => {
   } : initOnError();
@@ -8095,6 +8095,7 @@ const createHook = (lifecycle) => (hook, target = getCurrentInstance()) => {
 };
 const onShow = /* @__PURE__ */ createHook(ON_SHOW);
 const onLoad = /* @__PURE__ */ createHook(ON_LOAD);
+const onReady = /* @__PURE__ */ createHook(ON_READY);
 const pages = [
   {
     path: "pages/index/index",
@@ -8148,6 +8149,12 @@ const pages = [
     path: "pages/message/chat-window",
     style: {
       navigationStyle: "custom"
+    }
+  },
+  {
+    path: "pages/message/add-friend",
+    style: {
+      navigationBarTitleText: "添加好友"
     }
   },
   {
@@ -11051,6 +11058,7 @@ exports.initVueI18n = initVueI18n;
 exports.n = n$1;
 exports.o = o$1;
 exports.onLoad = onLoad;
+exports.onReady = onReady;
 exports.onShow = onShow;
 exports.p = p$1;
 exports.reactive = reactive;

@@ -57,6 +57,13 @@
 	  }
 	},
   {
+    "path" : "pages/message/add-friend",
+    "style" : 
+    {
+      "navigationBarTitleText": "添加好友"
+    }
+  },
+  {
     "path" : "pages/me/info-manage",
      "style" : 
      {

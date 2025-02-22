@@ -64,3 +64,6 @@
   margin-right: 8rpx;
   color: #333;
 }
+.container .dynamic-list .dynamic-item .footer .dynamic-comment.data-v-e73567d5 {
+  margin: 30rpx;
+}
