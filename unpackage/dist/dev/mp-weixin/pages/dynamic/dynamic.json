@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "动态",
-  "usingComponents": {
-    "uni-icons": "../../uni_modules/uni-icons/components/uni-icons/uni-icons",
-    "mid-button": "../../components/midbutton",
-    "tab-bar": "../../components/tabBar"
-  }
-}

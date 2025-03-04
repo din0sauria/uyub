@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "我发布的活动",
-  "usingComponents": {
-    "activity-card": "../../components/card"
-  }
-}

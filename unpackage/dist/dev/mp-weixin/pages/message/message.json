@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "消息",
-  "usingComponents": {
-    "uni-icons": "../../uni_modules/uni-icons/components/uni-icons/uni-icons",
-    "tab-bar": "../../components/tabBar"
-  }
-}
