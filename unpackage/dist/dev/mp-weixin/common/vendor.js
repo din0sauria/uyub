@@ -7156,9 +7156,9 @@ function initOnError() {
   };
 }
 function initRuntimeSocketService() {
-  const hosts = "192.168.254.1,192.168.142.1,10.138.161.107,127.0.0.1";
+  const hosts = "192.168.254.1,192.168.142.1,10.138.237.210,127.0.0.1";
   const port = "8090";
-  const id = "mp-weixin_LzhDxv";
+  const id = "mp-weixin_kWdZVu";
   const lazy = typeof swan !== "undefined";
   let restoreError = lazy ? () => {
   } : initOnError();
@@ -11056,6 +11056,7 @@ exports.f = f$1;
 exports.index = index;
 exports.initVueI18n = initVueI18n;
 exports.n = n$1;
+exports.nextTick$1 = nextTick$1;
 exports.o = o$1;
 exports.onLoad = onLoad;
 exports.onReady = onReady;

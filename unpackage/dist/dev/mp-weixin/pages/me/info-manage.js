@@ -32,8 +32,22 @@ const _sfc_main = {
       common_vendor.index.chooseImage({
         count: 1,
         // 选择图片的数量
-        success: (res) => {
-          userInfo.avatar = res.tempFilePaths[0];
+        success: (imgurl) => {
+          userInfo.avatar = imgurl.tempFilePaths[0];
+          common_vendor.index.uploadFile({
+            url: "http://127.0.0.1:4523/m1/5810635-5495696-default/user/fileUpload",
+            filePath: imgurl.tempFilePaths[0],
+            name: "file",
+            formData: {
+              "user": "test"
+            },
+            success: (uploadFileRes) => {
+              common_vendor.index.__f__("log", "at pages/me/info-manage.vue:78", uploadFileRes.data);
+            },
+            fail: (err) => {
+              common_vendor.index.__f__("log", "at pages/me/info-manage.vue:81", err);
+            }
+          });
         }
       });
     };
@@ -48,19 +62,21 @@ const _sfc_main = {
     };
     const interactWithBackend = () => {
       common_vendor.index.request({
-        url: "https://api.example.com/user-info",
+        url: "http://127.0.0.1:4523/m1/5810635-5495696-default/user/update",
         // 替换为实际的后端接口地址
-        method: "POST",
-        data: {
+        method: "PUT",
+        header: {
+          Authorization: `${userInfo.token}`
+        },
+        body: {
           nickname: userInfo.nickname,
-          birthday: userInfo.birthday,
-          avatar: userInfo.avatar
+          birthday: userInfo.birthday
         },
         success: (res) => {
-          common_vendor.index.__f__("log", "at pages/me/info-manage.vue:102", "后端交互成功", res.data);
+          common_vendor.index.__f__("log", "at pages/me/info-manage.vue:119", "后端交互成功", res);
         },
         fail: (err) => {
-          common_vendor.index.__f__("error", "at pages/me/info-manage.vue:106", "后端交互失败", err);
+          common_vendor.index.__f__("error", "at pages/me/info-manage.vue:123", "后端交互失败", err);
         }
       });
     };

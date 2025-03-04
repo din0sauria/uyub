@@ -80,7 +80,7 @@
   flex-direction: column;
   justify-content: center;
   padding-bottom: 20rpx;
-  border-bottom: 1rpx solid #c8c8c8;
+  border-bottom: 1rpx solid #eee;
 }
 .layout .message-list .message-item .message-content .friend-name.data-v-4c1b26cf {
   font-size: 32rpx;
@@ -89,7 +89,7 @@
 }
 .layout .message-list .message-item .message-content .last-message.data-v-4c1b26cf {
   font-size: 28rpx;
-  color: #666;
+  color: #888;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -101,7 +101,7 @@
   justify-content: space-between;
   align-items: flex-end;
   padding-bottom: 20rpx;
-  border-bottom: 1px solid #c8c8c8;
+  border-bottom: 1px solid #eee;
 }
 .layout .message-list .message-item .time-and-unreadcount .last-message-time.data-v-4c1b26cf {
   margin-top: 10rpx;

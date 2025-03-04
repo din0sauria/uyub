@@ -65,9 +65,24 @@
   const changeAvatar = () => {
     uni.chooseImage({
       count: 1, // 选择图片的数量
-      success: (res) => {
-        // 将选中的图片路径赋值给 avatar
-        userInfo.avatar = res.tempFilePaths[0];
+      success: (imgurl) => {
+        userInfo.avatar = imgurl.tempFilePaths[0];
+        uni.uploadFile({
+          url: 'http://127.0.0.1:4523/m1/5810635-5495696-default/user/fileUpload',
+          filePath: imgurl.tempFilePaths[0],
+          name: 'file',
+          formData: {
+            'user': 'test'
+          },
+          success: (uploadFileRes) => {
+            console.log(uploadFileRes.data);
+          },
+          fail: (err) => {
+            console.log(err);
+          }
+        });
+
+
       }
     });
   };
@@ -83,7 +98,7 @@
       duration: 2000
     });
 
-    // 模拟与后端交互
+    //与后端交互
     interactWithBackend();
   };
 
@@ -91,15 +106,17 @@
   const interactWithBackend = () => {
     // 假设有一个后端接口，这里使用 uni.request 模拟发送请求
     uni.request({
-      url: 'https://api.example.com/user-info', // 替换为实际的后端接口地址
-      method: 'POST',
-      data: {
+      url: 'http://127.0.0.1:4523/m1/5810635-5495696-default/user/update', // 替换为实际的后端接口地址
+      method: 'PUT',
+      header: {
+        Authorization: `${userInfo.token}`
+      },
+      body: {
         nickname: userInfo.nickname,
         birthday: userInfo.birthday,
-        avatar: userInfo.avatar
       },
       success: (res) => {
-        console.log('后端交互成功', res.data);
+        console.log('后端交互成功', res);
         // 可以在这里处理后端返回的数据，如更新用户信息
       },
       fail: (err) => {

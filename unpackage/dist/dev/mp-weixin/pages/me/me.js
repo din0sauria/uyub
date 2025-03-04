@@ -20,7 +20,10 @@ const _sfc_main = {
         color: "#aa00ff",
         handler: () => {
           if (!userInfo.userID) {
-            common_vendor.index.showToast({ title: "请先登录", icon: "none" });
+            common_vendor.index.showToast({
+              title: "请先登录",
+              icon: "none"
+            });
             return;
           }
           navTo("info-manage");
@@ -32,7 +35,10 @@ const _sfc_main = {
         color: "#007AFF",
         handler: () => {
           if (!userInfo.userID) {
-            common_vendor.index.showToast({ title: "请先登录", icon: "none" });
+            common_vendor.index.showToast({
+              title: "请先登录",
+              icon: "none"
+            });
             return;
           }
           navTo("friend-manage");
@@ -44,7 +50,10 @@ const _sfc_main = {
         color: "#4CD964",
         handler: () => {
           if (!userInfo.userID) {
-            common_vendor.index.showToast({ title: "请先登录", icon: "none" });
+            common_vendor.index.showToast({
+              title: "请先登录",
+              icon: "none"
+            });
             return;
           }
           navTo("my-published");
@@ -56,7 +65,10 @@ const _sfc_main = {
         color: "#ff0000",
         handler: () => {
           if (!userInfo.userID) {
-            common_vendor.index.showToast({ title: "请先登录", icon: "none" });
+            common_vendor.index.showToast({
+              title: "请先登录",
+              icon: "none"
+            });
             return;
           }
           navTo("my-joined");
@@ -83,7 +95,8 @@ const _sfc_main = {
       avatar: "/static/dinohead.jpg",
       nickname: "未登录用户",
       userID: "",
-      birthday: ""
+      birthday: "",
+      token: ""
     });
     common_vendor.onShow(() => {
       const stored = common_vendor.index.getStorageSync("userInfo");
@@ -100,7 +113,10 @@ const _sfc_main = {
         });
         userInfo.avatar = res.tempFilePaths[0];
       } catch (err) {
-        common_vendor.index.showToast({ title: "上传失败", icon: "none" });
+        common_vendor.index.showToast({
+          title: "上传失败",
+          icon: "none"
+        });
       }
     };
     const handleWechatLogin = async () => {
@@ -110,16 +126,61 @@ const _sfc_main = {
         const loginRes = await common_vendor.index.login({
           provider: "weixin"
         });
-        const { code } = loginRes;
-        common_vendor.index.__f__("log", "at pages/me/me.vue:193", code);
-        userInfo.userID = "12345678910";
-        userInfo.nickname = "dinosaur";
-        userInfo.birthday = "2000-01-01";
-        common_vendor.index.showToast({ title: "登录成功" });
-        saveUserInfo();
+        const {
+          code
+        } = loginRes;
+        const {
+          data
+        } = await common_vendor.index.request({
+          url: "http://127.0.0.1:4523/m1/5810635-5495696-default/user/login",
+          method: "POST",
+          data: {
+            code
+          }
+        });
+        if (data.data) {
+          userInfo.token = data.data;
+          saveUserInfo();
+          getUserInfo();
+        } else
+          common_vendor.index.showToast({
+            title: "登录失败",
+            icon: "none"
+          });
       } catch (err) {
-        common_vendor.index.showToast({ title: "登录失败", icon: "none" });
-        common_vendor.index.__f__("log", "at pages/me/me.vue:217", err);
+        common_vendor.index.showToast({
+          title: "登录失败",
+          icon: "none"
+        });
+        common_vendor.index.__f__("log", "at pages/me/me.vue:218", err);
+      }
+    };
+    const getUserInfo = async () => {
+      try {
+        await common_vendor.index.request({
+          url: "http://127.0.0.1:4523/m1/5810635-5495696-default/user/info",
+          method: "GET",
+          header: {
+            Authorization: `${userInfo.token}`
+          },
+          success: (res) => {
+            common_vendor.index.__f__("log", "at pages/me/me.vue:231", res.data.data);
+            if (res.data.data.userID) {
+              userInfo.avatar = res.data.data.avatar;
+              userInfo.userID = res.data.data.userID;
+              userInfo.nickname = res.data.data.nickname;
+              userInfo.birthday = res.data.data.birthday;
+              saveUserInfo();
+              common_vendor.index.showToast({ title: "登录成功" });
+            }
+          }
+        });
+      } catch (err) {
+        common_vendor.index.showToast({
+          title: "发送请求失败",
+          icon: "none"
+        });
+        common_vendor.index.__f__("log", "at pages/me/me.vue:247", err);
       }
     };
     const saveUserInfo = () => {
@@ -130,10 +191,13 @@ const _sfc_main = {
       userInfo.nickname = "未登录用户";
       userInfo.userID = "";
       userInfo.birthday = "";
+      userInfo.token = "";
       common_vendor.index.removeStorageSync("userInfo");
     };
     const navTo = (path) => {
-      common_vendor.index.navigateTo({ url: `/pages/me/${path}` });
+      common_vendor.index.navigateTo({
+        url: `/pages/me/${path}`
+      });
     };
     return (_ctx, _cache) => {
       return common_vendor.e({
