@@ -68,8 +68,11 @@
       success: (imgurl) => {
         userInfo.avatar = imgurl.tempFilePaths[0];
         uni.uploadFile({
-          url: 'http://127.0.0.1:4523/m1/5810635-5495696-default/user/fileUpload',
+          url: 'http://120.26.34.133:8081/user/fileUpload',
           filePath: imgurl.tempFilePaths[0],
+          header: {
+            Authorization: `${userInfo.token}`
+          },
           name: 'file',
           formData: {
             'user': 'test'
@@ -91,12 +94,6 @@
   const saveUserInfo = () => {
     // 使用 toRaw 去除 Proxy，将响应式对象转换为普通对象
     uni.setStorageSync('userInfo', toRaw(userInfo));
-    // 提示用户保存成功
-    uni.showToast({
-      title: '保存成功',
-      icon: 'success',
-      duration: 2000
-    });
 
     //与后端交互
     interactWithBackend();
@@ -104,20 +101,33 @@
 
   // 与后端交互的示例函数
   const interactWithBackend = () => {
-    // 假设有一个后端接口，这里使用 uni.request 模拟发送请求
     uni.request({
-      url: 'http://127.0.0.1:4523/m1/5810635-5495696-default/user/update', // 替换为实际的后端接口地址
+      url: 'http://120.26.34.133:8081/user/update', // 替换为实际的后端接口地址
       method: 'PUT',
       header: {
+        'Content-Type': 'application/json',
         Authorization: `${userInfo.token}`
       },
-      body: {
+      data: {
         nickname: userInfo.nickname,
         birthday: userInfo.birthday,
       },
       success: (res) => {
         console.log('后端交互成功', res);
         // 可以在这里处理后端返回的数据，如更新用户信息
+         if (res.statusCode === 200) {
+            uni.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 2000
+            });
+          } else {
+            uni.showToast({
+              title: '上传失败',
+              icon: 'error',
+              duration: 2000
+            });
+          }
       },
       fail: (err) => {
         console.error('后端交互失败', err);

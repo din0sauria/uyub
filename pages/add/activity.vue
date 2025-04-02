@@ -177,7 +177,7 @@ const onRegionChange = (e) => {
   city.value = e.detail.value[1];
 };
 const onAddressChange = (e) => {
-  activity.detailAddress = city.value+e.detail.value;
+  activity.detailAddress = e.detail.value||"不限";
 };
 const validateTime = () => {
   if (activity.startTime && activity.endTime) {
@@ -199,7 +199,7 @@ const setOption = (e) => {
 
 const isSubmitting = ref(false);
 
-const publishActivity = async () => {
+const publishActivity =async  () => {
   if (userInfo.userID === '') {
     uni.showToast({
       title: '请先登录',
@@ -220,38 +220,87 @@ const publishActivity = async () => {
     { field: 'plan', message: '请填写计划人数' }
   ];
 
-  for (const { field, message } of requiredFields) {
-    if (!activity[field]) {
-      return uni.showToast({
-        title: message,
+  // for (const { field, message } of requiredFields) {
+  //   if (!activity[field]) {
+  //     return uni.showToast({
+  //       title: message,
+  //       icon: 'none'
+  //     });
+  //   }
+  // }
+
+
+    async function uploadImage() {
+      // 使用Promise.all进行并行上传，如需串行上传可改用for循环
+      const uploadPromises = images.value.map(image => {
+        return new Promise((resolve, reject) => {
+          uni.uploadFile({
+            url: 'http://120.26.34.133:8081/activity/upLoadFile',
+            filePath: image,
+            name: 'file',
+            header: {
+              Authorization: `${userInfo.token}`
+            },
+            success: (res) => {
+              // 根据实际API响应结构调整数据获取方式
+              if (res.statusCode === 200) {
+                const data = JSON.parse(res.data);
+                console.log(data);
+                activity.images.push(data.data); // 假设返回结构为{ data: "url" }
+                resolve();
+              } else {
+                reject(new Error('上传失败'));
+              }
+            },
+            fail: (err) => {
+              reject(err);
+            }
+          });
+        });
+      });
+    
+      // 等待所有图片上传完成
+      await Promise.all(uploadPromises);
+    }
+    
+    try {
+      // 1. 先上传图片
+      await uploadImage();
+      console.log('所有图片上传完成', activity);
+    
+      // 2. 提交活动数据
+      const res = await new Promise((resolve, reject) => {
+        uni.request({
+          method: 'POST',
+          header: {
+            Authorization: `${userInfo.token}`,
+            'Content-Type': 'application/json' // 添加合适的Content-Type
+          },
+          url: 'http://120.26.34.133:8081/activity/add',
+          data: {
+            ...activity,
+            time: `${activity.startTime}-${activity.endTime}`,
+          },
+          success: resolve,
+          fail: reject
+        });
+      });
+    
+      console.log('活动提交成功', res);
+      uni.showToast({
+        title: '发布成功',
+        icon: 'success'
+      });
+    } catch (error) {
+      console.error('操作失败:', error);
+      uni.showToast({
+        title: '发布失败',
         icon: 'none'
       });
+    } finally {
+      isSubmitting.value = false;
     }
-  }
 
-  try {
-    // 1. 先上传图片
-    const imageUrls = await uploadImages();
-
-    // 2. 提交活动数据
-    const res = await uni.request({
-      method: 'POST',
-      url: '/activities',
-      data: {
-        ...activity,
-        images: imageUrls
-      }
-    });
-
-    // 处理响应...
-  } catch (error) {
-    uni.showToast({
-      title: error.message || '发布失败',
-      icon: 'none'
-    });
-  } finally {
-    isSubmitting.value = false;
-  }
 };
 
 // 用户信息

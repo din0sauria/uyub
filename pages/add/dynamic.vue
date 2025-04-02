@@ -75,6 +75,7 @@ const isSubmitting = ref(false);
 const post = reactive({
   title: '',
   content: '',
+  images:[]
 });
 
 const selectedCategoryIndex = ref(null);
@@ -135,16 +136,36 @@ const publishPost = async () => {
   isSubmitting.value = true;
 
   try {
-    console.log(images.value.join(','));
-    const res = await uni.request({
-      method: 'post',
-      url: '/fatie',
-      data: JSON.stringify({
-        ...post,
-        images: images.value.join(','),
-        userID:userInfo.userID
+    for (let i = 0; i < images.value.length; i++) {
+      const image = images.value[i];
+      const res = await uni.uploadFile({
+        url: 'http://120.26.34.133:8081/activity/upLoadFile',
+        filePath: image,
+        name: 'file',
+        header: {
+          Authorization: `${userInfo.token}`
+        },
+        success: (uploadFileRes) => {
+          
+          const uploadFileResData = JSON.parse(uploadFileRes.data);
+          //console.log(uploadFileResData.data);
+          post.images.push(uploadFileResData.data);
+        }
+      });
+      console.log(res);
+    }
+    console.log(post);
+    post.images=images.value;
+    await uni.request({
+      method: 'POST',
+      url: 'http://120.26.34.133:8081/dynamic/add',
+      header: {
+        Authorization: `${userInfo.token}`
+      },
+      data: {
+        ...post
       }
-    )});
+    });
     
     uni.showToast({ title: '发布成功', icon: 'success' });
     setTimeout(() => uni.navigateBack(), 1500);

@@ -179,37 +179,41 @@
     try {
       // 1. 获取微信code
       const loginRes = await uni.login({
-        provider: 'weixin'
+        provider: 'weixin',
       });
-
+      console.log(loginRes);
       // 2. 发送code到后端
-      const {
-        code
-      } = loginRes;
-      //console.log(code);
+      const code = loginRes.code;
+      //const code="0b3ph9ol2TwTif4dNWll2oTJWd3ph9oO"
+      console.log(code);
       // 后端接口
       const {
         data
       } = await uni.request({
-        url: 'http://127.0.0.1:4523/m1/5810635-5495696-default/user/login',
+        url: 'http://120.26.34.133:8081/user/login',
         method: 'POST',
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
         data: {
           code
         }
       });
-
       // 3. 登录成功处理
       if (data.data) {
         //uni.showToast({ title: '登录成功' });
         // 保存
+        console.log(data.data);
         userInfo.token = data.data;
         saveUserInfo();
         getUserInfo();
-      } else uni.showToast({
-        title: '登录失败',
-        icon: 'none'
-      });
-      //console.log(data);
+      } else {
+        uni.showToast({
+          title: '登录失败',
+          icon: 'none'
+        });
+        console.log(data);
+      }
     } catch (err) {
       uni.showToast({
         title: '登录失败',
@@ -222,23 +226,26 @@
     try {
       // 发送请求获取用户信息
       await uni.request({
-        url: 'http://127.0.0.1:4523/m1/5810635-5495696-default/user/info',
+        url: 'http://120.26.34.133:8081/user/info',
         method: 'GET',
         header: {
           Authorization: `${userInfo.token}`
         },
         success: (res) => {
-                console.log(res.data.data);
-                // 更新用户信息
-                if (res.data.data.userID) {
-                userInfo.avatar = res.data.data.avatar;
-                userInfo.userID = res.data.data.userID;
-                userInfo.nickname = res.data.data.nickname;
-                userInfo.birthday = res.data.data.birthday;
-                saveUserInfo(); 
-                uni.showToast({ title: '登录成功' });
-            }
-      }});
+          console.log(res.data);
+          // 更新用户信息
+          if (res.data.data.userID) {
+            userInfo.avatar = res.data.data.avatar;
+            userInfo.userID = res.data.data.userID;
+            userInfo.nickname = res.data.data.nickname || '未注册用户';
+            userInfo.birthday = res.data.data.birthday || '2000-01-01';
+            saveUserInfo();
+            uni.showToast({
+              title: '登录成功'
+            });
+          }
+        }
+      });
     } catch (err) {
       uni.showToast({
         title: '发送请求失败',

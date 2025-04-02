@@ -2,7 +2,7 @@
   <view class="card">
     <view class="title">
       <view class="card-title">{{ title }}</view>
-      <view class="card-price">{{ price }}</view>
+      <view class="card-price">￥{{ price }}</view>
     </view>
     <view class="card-address"><uni-icons type="location-filled"></uni-icons>&ensp;{{ address }}
     </view>

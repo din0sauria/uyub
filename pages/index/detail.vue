@@ -15,7 +15,8 @@
 
     <!-- 活动地址 -->
     <view class="address"><uni-icons type="location" color="#fff"></uni-icons>&emsp;{{ activity.address }}</view>
-    <view class="detailAddress"><uni-icons type="map" color="#fff"></uni-icons>&emsp;{{ activity.detailAddress }}</view>
+    <view class="detailAddress"><uni-icons type="map"
+        color="#fff"></uni-icons>&emsp;{{ activity.detailAddress||activity.address }}</view>
     <view class="divider"></view> <!-- 模拟 <hr> -->
     <!-- 活动时间 -->
     <view class="time"><text style="color: gray;">活动时间&emsp;</text>{{ activity.date }} {{ activity.time }}</view>
@@ -46,10 +47,11 @@
     <view class="author-info">
       <image :src="activity.authorAvatar||activityex.authorAvatar" mode="aspectFill" class="author-avatar" />
       <view>
-      <view class="author-name">{{ activity.author|| activityex.author}}</view>
-      <view class="author-name" style="font-weight: normal;" @click="copytext">ID:&ensp;{{ activity.authorID||activityex.authorID }}
-      <text style="color: gray;font-weight: 100;">(点击复制)</text>
-      </view>
+        <view class="author-name">{{ activity.author|| activityex.author}}</view>
+        <view class="author-name" style="font-weight: normal;" @click="copytext">
+          ID:&ensp;{{ activity.authorID||activityex.authorID }}
+          <text style="color: gray;font-weight: 100;">(点击复制)</text>
+        </view>
       </view>
     </view>
   </view>
@@ -97,7 +99,7 @@
     }
   });
   const btntext = computed(() => {
-    if (activity.value.status != '正在报名') return activity.value.status;
+    if (activity.value.status != '正在报名') return activity.value.status||'去报名';
     else return userInfo.userID ? '立即报名' : '请先登录';
   })
   const activity = ref({
@@ -114,7 +116,7 @@
     tag: '不限',
     description: `人满可以报名等位，等位人数够4人会＋场地，加不上也会退费。
 免责声明:心脏病、高血压不宜打球，酒后严禁打球；如受伤或突发疾病本群不承担任何责任，报名视为同意声明。`,
-    images: ["/static/dinoundertreezoom.jpg", "/static/dinohead.jpg"],
+    images: ['/static/zhuoer.jpg','/static/pgd.jpg'],
     author: '羽动生活俱乐部',
     avatars: [
       '/static/c1.png',
@@ -162,7 +164,7 @@
       tags: '不限',
       description: `人满可以报名等位，等位人数够4人会＋场地，加不上也会退费。
       免责声明:心脏病、高血压不宜打球，酒后严禁打球；如受伤或突发疾病本群不承担任何责任，报名视为同意声明。`,
-      images: ["/static/dinoundertreezoom.jpg", "/static/dinohead.jpg", "/static/dinoonsea.jpg"],
+      images: ['/static/zhuoer.jpg','/static/pgd.jpg'],
       author: '羽动生活俱乐部',
       avatars: [
         '/static/c1.png',
@@ -191,7 +193,7 @@
       tags: '不限',
       description: `人满可以报名等位，等位人数够4人会＋场地，加不上也会退费。
 免责声明:心脏病、高血压不宜打球，酒后严禁打球；如受伤或突发疾病本群不承担任何责任，报名视为同意声明。`,
-      images: ["/static/dinoundertreezoom.jpg", "/static/dinohead.jpg", "/static/dinoonsea.jpg"],
+      images: ['/static/zhuoer.jpg','/static/pgd.jpg'],
       author: '羽动生活俱乐部',
       avatars: [
         '/static/c1.png',
@@ -265,6 +267,318 @@
       participants: 10,
       plan: 30,
       tags: '萌新'
+    },
+    {
+      actID: '8',
+      title: '王者荣耀排位赛王者以上',
+      price: '免费',
+      address: '不限',
+      date: '04月06日 周日',
+      time: '19:00-22:00',
+      status: '正在报名',
+      participants: 12,
+      plan: 15,
+      tag: '高级'
+    },
+    {
+      actID: '9',
+      title: '瓦洛兰特团队赛',
+      price: '免费',
+      address: '不限',
+      date: '04月06日 周日',
+      time: '18:00-23:00',
+      status: '报名中',
+      participants: 4,
+      plan: 5,
+      tag: '高级'
+    },
+    {
+      actID: '10',
+      title: '第五人格新手局',
+      price: '免费',
+      address: '不限',
+      date: '04月06日 周日',
+      time: '14:00-18:00',
+      status: '正在报名',
+      participants: 30,
+      plan: 50,
+      tag: '萌新'
+    },
+    {
+      actID: '11',
+      title: 'CSGO团队竞技赛',
+      price: '免费',
+      address: '不限',
+      date: '04月06日 周日',
+      time: '20:00-23:00',
+      status: '报名结束',
+      participants: 75,
+      plan: 80,
+      tag: '高级'
+    },
+    {
+      actID: '12',
+      title: '英雄联盟匹配',
+      price: '免费',
+      address: '不限',
+      date: '04月06日 周日',
+      time: '15:00-21:00',
+      status: '正在报名',
+      participants: 90,
+      plan: 100,
+      tag: '萌新'
+    },
+    {
+      actID: '13',
+      title: '炉石传说休闲赛',
+      price: '免费',
+      address: '不限',
+      date: '04月06日 周日',
+      time: '13:00-17:00',
+      status: '报名中',
+      participants: 25,
+      plan: 40,
+      tag: '萌新'
+    },
+    {
+      actID: '14',
+      title: 'DOTA2排位赛',
+      price: '免费',
+      address: '不限',
+      date: '04月06日 周日',
+      time: '19:00-23:00',
+      status: '正在报名',
+      participants: 60,
+      plan: 70,
+      tag: '高级'
+    },
+    {
+      actID: '15',
+      title: '星禾乒乓球运动中心',
+      price: '45',
+      address: '星禾乒乓球运动中心',
+      date: '04月06日 周日',
+      time: '18:00-21:00',
+      status: '正在报名',
+      participants: 85,
+      plan: 100,
+      tag: '不限'
+    },
+    {
+      actID: '16',
+      title: '幸福林带乒乓球训练馆',
+      price: '55',
+      address: '幸福林带乒乓球训练馆',
+      date: '04月06日 周日',
+      time: '19:30-22:30',
+      status: '报名中',
+      participants: 15,
+      plan: 30,
+      tag: '高级'
+    },
+    {
+      actID: '17',
+      title: '西安奥体中心乒乓球馆',
+      price: '40',
+      address: '西安市国际港务区港丰路69号',
+      date: '04月06日 周日',
+      time: '09:30-21:30',
+      status: '正在报名',
+      participants: 65,
+      plan: 12,
+      tag: '高级'
+    },
+    {
+      actID: '18',
+      title: '新曈乒乓球训练中心',
+      price: '50',
+      address: '西安省体育馆BE中心',
+      date: '04月06日 周日',
+      time: '10:30-21:30',
+      status: '报名中',
+      participants: 35,
+      plan: 60,
+      tag: '高级'
+    },
+    {
+      actID: '19',
+      title: '西安西北大学乒乓球馆',
+      price: '8',
+      address: '西安市太白北路229号西北大学校内',
+      date: '04月06日 周日',
+      time: '14:00-21:00',
+      status: '报名中',
+      participants: 45,
+      plan: 70,
+      tag: '中级'
+    },
+    {
+      actID: '20',
+      title: '朱雀乒乓球馆',
+      price: '30',
+      address: '西安市碑林区长安路北段14号',
+      date: '04月06日 周日',
+      time: '09:30-21:30',
+      status: '正在报名',
+      participants: 55,
+      plan: 90,
+      tag: '高级'
+    },
+    {
+      actID: '21',
+      title: '西安博蓝乒乓球馆',
+      price: '免费',
+      address: '西安市经济开发区凤城十路99号蓝天院内',
+      date: '04月06日 周日',
+      time: '08:30-21:30',
+      status: '报名中',
+      participants: 12,
+      plan: 35,
+      tag: '萌新'
+    },
+    {
+      actID: '22',
+      title: '星禾健身中心团体课',
+      price: '60',
+      address: '星禾健身中心',
+      date: '04月07日 周一',
+      time: '19:00-20:30',
+      status: '正在报名',
+      participants: 45,
+      plan: 50,
+      tag: '中级'
+    },
+    {
+      actID: '23',
+      title: '城市游泳馆夜场',
+      price: '30',
+      address: '城市游泳馆',
+      date: '04月07日 周一',
+      time: '18:00-22:00',
+      status: '报名中',
+      participants: 60,
+      plan: 80,
+      tag: '不限'
+    },
+    {
+      actID: '24',
+      title: '幸福林带篮球场3v3比赛',
+      price: '免费',
+      address: '幸福林带篮球场',
+      date: '04月08日 周二',
+      time: '19:30-21:30',
+      status: '正在报名',
+      participants: 24,
+      plan: 30,
+      tag: '竞技'
+    },
+    {
+      actID: '25',
+      title: '西安奥体中心足球友谊赛',
+      price: '40',
+      address: '西安市国际港务区港丰路69号',
+      date: '04月09日 周三',
+      time: '18:00-20:00',
+      status: '报名中',
+      participants: 15,
+      plan: 22,
+      tag: '高级'
+    },
+    {
+      actID: '26',
+      title: '新曈瑜伽中心晨练课',
+      price: '45',
+      address: '新曈瑜伽中心',
+      date: '04月10日 周四',
+      time: '07:00-08:30',
+      status: '正在报名',
+      participants: 18,
+      plan: 25,
+      tag: '不限'
+    },
+    {
+      actID: '27',
+      title: '朱雀公园户外徒步',
+      price: '免费',
+      address: '西安市碑林区朱雀公园',
+      date: '04月11日 周五',
+      time: '08:30-12:00',
+      status: '报名中',
+      participants: 35,
+      plan: 50,
+      tag: '休闲'
+    },
+    {
+      actID: '28',
+      title: '西安博蓝攀岩馆挑战赛',
+      price: '50',
+      address: '西安市经济开发区凤城十路99号',
+      date: '04月12日 周六',
+      time: '14:00-17:00',
+      status: '正在报名',
+      participants: 12,
+      plan: 20,
+      tag: '高级'
+    },
+    {
+      actID: '29',
+      title: '西北大学田径场夜跑活动',
+      price: '免费',
+      address: '西安市太白北路229号西北大学校内',
+      date: '04月13日 周日',
+      time: '19:00-21:00',
+      status: '报名中',
+      participants: 40,
+      plan: 60,
+      tag: '不限'
+    },
+    {
+      actID: '30',
+      title: '城市射箭馆体验课',
+      price: '80',
+      address: '城市射箭馆',
+      date: '04月14日 周一',
+      time: '19:30-21:00',
+      status: '正在报名',
+      participants: 10,
+      plan: 15,
+      tag: '不限'
+    },
+    {
+      actID: '31',
+      title: '星禾电竞中心英雄联盟赛事',
+      price: '免费',
+      address: '不限',
+      date: '04月15日 周二',
+      time: '19:00-23:00',
+      status: '报名中',
+      participants: 75,
+      plan: 100,
+      tag: '高级'
+    },
+    {
+      actID: '32',
+      title: '幸福林带台球馆友谊赛',
+      price: '25',
+      address: '幸福林带台球馆',
+      date: '04月16日 周三',
+      time: '18:30-22:00',
+      status: '正在报名',
+      participants: 16,
+      plan: 24,
+      tag: '中级'
+    },
+    {
+      actID: '33',
+      title: '西安奥体中心滑冰体验',
+      price: '40',
+      address: '西安市国际港务区港丰路69号',
+      date: '04月17日 周四',
+      time: '14:00-17:00',
+      status: '报名中',
+      participants: 28,
+      plan: 40,
+      tag: '不限'
     }
   ];
   const fetchActivityDetail = async (activityId) => {
@@ -296,10 +610,10 @@
     fetchActivityDetail(activityId);
   });
   //
-  const copytext=()=>{
+  const copytext = () => {
     uni.setClipboardData({
-      data: activity.value.authorID||activityex.authorID,
-      success: function () {
+      data: activity.value.authorID || activityex.authorID,
+      success: function() {
         uni.showToast({
           title: 'ID已复制',
           icon: 'success'
@@ -329,7 +643,17 @@
 
   // 计算属性：只显示前 8 个头像
   const displayedAvatars = computed(() => {
-    if (!activity.value.avatars) return [];
+    if (!activity.value.avatars) activity.value.avatars=[
+        '/static/c1.png',
+        '/static/c2.png',
+        '/static/c3.png',
+        '/static/c4.png',
+        '/static/c5.png',
+        '/static/c6.png',
+        '/static/c7.png',
+        '/static/c8.png',
+        '/static/c9.png', // 超过 8 个
+      ].slice(0,activity.value.participants);
     if (activity.value.avatars.length <= 8) {
       return activity.value.avatars;
     } else {
@@ -454,7 +778,7 @@
   }
 
   .author-name {
-    margin:15rpx 40rpx;
+    margin: 15rpx 40rpx;
     font-size: 32rpx;
     font-weight: bold;
   }

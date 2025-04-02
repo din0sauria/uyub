@@ -62,7 +62,7 @@
 			dynamicID: 1,
 			avatar: '/static/dinohead.jpg',
 			nickname: '恐龙苯龙',
-			content: '今天天气真好，恐龙想CSltdd！',
+			content: 'ldd CS！',
 			images: [
 				'/static/dinoonsea.jpg',
 				'/static/csltdd.jpg',
@@ -72,7 +72,7 @@
 			likeCount: 156,
 			commentList: [{
 				commentor: 'ltdd',
-				content: '不是哥们'
+				content: '曹操了'
 			}]
 		},
 		{

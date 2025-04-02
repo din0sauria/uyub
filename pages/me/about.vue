@@ -95,6 +95,11 @@
           <view class="member-name">戴天奕</view>
           <view class="member-department">后端工程师</view>
         </view>
+        <view class="team-member">
+          <uni-icons type="auth-filled" size="30"></uni-icons>
+          <view class="member-name">高祥</view>
+          <view class="member-department">后端工程师</view>
+        </view>
       </view>
       <view class="team-slogan">一个有创造力和执行力的团队</view>
     </view>
