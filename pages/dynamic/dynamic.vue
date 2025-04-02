@@ -1,19 +1,21 @@
 <template>
-
-	<!-- 朋友圈动态列表 -->
+	<!-- 动态的数据结构中添加头像属性
+ 评论只保留昵称和内容属性即可-->
 	<view class="container">
+		<!-- 朋友圈动态列表 -->
 		<scroll-view class="dynamic-list" scroll-y>
 			<view class="dynamic-item" v-for="(dynamicItem, dynamicIndex) in dynamicList" :key="dynamicItem.dynamicID">
 				<!-- 用户头像和昵称 -->
 				<view class="user-info">
-					<image class="avatar" :src="dynamicItem.avatar" mode="aspectFill"></image>
-					<text class="nickname">{{ dynamicItem.nickname }}</text>
+					<image class="avatar" :src="dynamicItem.authorAvatar" mode="aspectFill"></image>
+					<text class="nickname">{{ dynamicItem.author }}</text>
 				</view>
 				<!-- 动态内容 -->
 				<view class="content">
 					<text class="text">{{ dynamicItem.content }}</text>
 					<!-- 动态图片 -->
-					<view class="image-list" v-if="dynamicItem.images && dynamicItem.images.length > 0">
+					<!-- && dynamicItem.images.length > 0 -->
+					<view class="image-list" v-if="dynamicItem.images ">
 						<image class="image" v-for="(img, imgIndex) in dynamicItem.images" :key="imgIndex" :src="img"
 							mode="aspectFill">
 						</image>
@@ -24,24 +26,25 @@
 					<text class="time">{{ dynamicItem.time }}</text>
 					<view class="actions">
 
-						<view class="action">
+						<!-- 						<view class="action">
 							<uni-icons class="action-icon" :type="dynamicItem.isLiked?'hand-up-filled':'hand-up'"
 								size="35" color="rgb(20, 20, 20)" @click="onLike(dynamicItem)"></uni-icons>
 							<text class="action-content">{{dynamicItem.likeCount}}</text>
-						</view>
+						</view> -->
 
 						<view class="action">
 							<uni-icons class="action-icon" type="chat" size="35" color="rgb(20, 20, 20)"
 								@click="onComment(dynamicItem)"></uni-icons>
-							<text class="action-content">{{dynamicItem.commentList.length}}</text>
+							<!-- 这里会报错，因为commentList是一个在异步操作中添加的属性，一开始的时候会undefined-->
+							<!-- <text class="action-content">{{dynamicItem.commentList.length}}</text> -->
 						</view>
 
 					</view>
 				</view>
 				<view class="dynamic-comment" v-for="(commentItem, commentIndex) in dynamicItem.commentList"
 					:key="commentIndex">
-					<text class="commentor" style="font-weight:1000">{{ commentItem.commentor }}</text>
-					<text class="comment-content">: {{ commentItem.content }}</text>
+					<text class="commentor" style="font-weight:1000">{{ commentItem.author }}</text>
+					<text class="comment-content">: {{ commentItem.comment }}</text>
 				</view>
 			</view>
 			<view style="height: 200rpx;"></view>
@@ -57,77 +60,97 @@
 	import {
 		ref
 	} from 'vue'
-	// 朋友圈数据
-	const dynamicList = ref([{
-			dynamicID: 1,
-			avatar: '/static/dinohead.jpg',
-			nickname: '恐龙苯龙',
-			content: 'ldd CS！',
-			images: [
-				'/static/dinoonsea.jpg',
-				'/static/csltdd.jpg',
-			],
-			time: '1小时前',
-			isLiked: false,
-			likeCount: 156,
-			commentList: [{
-				commentor: 'ltdd',
-				content: '曹操了'
-			}]
-		},
-		{
-			dynamicID: 2,
-			avatar: '/static/lyt3.jpg',
-			nickname: '小雅',
-			content: '分享一张照片～',
-			images: ['/static/lyt4.jpg'],
-			time: '2小时前',
-			isLiked: false,
-			likeCount: 99,
-			commentList: []
-		},
-		{
-			dynamicID: 3,
-			avatar: '/static/zjy.jpg',
-			nickname: '小蓝',
-			content: '今天学习了新的编程知识，感觉收获满满！',
-			images: [],
-			time: '3小时前',
-			isLiked: false,
-			likeCount: 248,
-			commentList: []
-		},
-	])
+	import {
+		onShow
+	} from '@dcloudio/uni-app';
 
-	function onLike(dynamicItem) {
-		dynamicItem.isLiked = !dynamicItem.isLiked;
-		if (dynamicItem.isLiked) {
-			dynamicItem.likeCount += 1; // 点赞数 +1
-		} else {
-			dynamicItem.likeCount -= 1; // 点赞数 -1
+	const dynamicList = ref([])
+	const myInfo = ref()
+	
+	onShow((options) => {
+		const stored = uni.getStorageSync('userInfo');
+		if (stored) Object.assign(myInfo, stored);
+		getDynamicList()
+	})
+
+	const getDynamicList = async () => {
+		try {
+			// 发起 GET 请求获取聊天记录
+			const {
+				data:dynamicData
+			} = await uni.request({
+				// url: 'http://120.26.34.133:8081/dynamic/showDynamics', // 请求的 URL
+				url: 'http://120.26.34.133:8081/dynamic/showDynamics', 
+				method: 'GET',
+				header: {
+					Authorization: `${myInfo.token}` // 假设 userInfo.token 包含有效的授权令牌
+					// Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcGVuaWQiOiJpN0ZEYzUiLCJzZXNzaW9uX2tleSI6IjhxSU11RlliMnRkMyIsImxvZ2luX3RpbWUiOiIyMDI1LTA0LTAxVDEzOjI0OjQ5LjM4NDU1NCIsImV4cCI6MTc0MzU3MTQ4OS4zNjg1NDR9.UY2gA8amQMZCBFH8TcAFvpl_11_s2jSUC4GWPx6bR28'
+				},
+			});
+			console.log(dynamicData)
+			for (let i = 0; i < dynamicData.data.length; i++) {
+				dynamicList.value.push(dynamicData.data[i])
+			}
+			for (let i = 0; i < dynamicList.value.length; i++) {
+				const {
+					data: dynamicData
+				} = await uni.request({
+					url: 'http://120.26.34.133:8081/dynamic/showComments',
+					method: 'GET',
+					header: {
+						Authorization: myInfo.token // 假设 userInfo.token 包含有效的授权令牌
+					},
+					data: {
+						dynID: dynamicList.value[i].dynID
+					}
+				})
+				dynamicList.value[i].commentList = dynamicData.data
+			}
+			// console.log(dynamicList)
+			console.log(dynamicList.value)
+		} catch (error) {
+			// 如果请求失败，打印错误信息
+			console.error("hahaha", error);
 		}
 	}
 
+	// function onLike(dynamicItem) {
+	// 	dynamicItem.isLiked = !dynamicItem.isLiked;
+	// 	if (dynamicItem.isLiked) {
+	// 		dynamicItem.likeCount += 1; // 点赞数 +1
+	// 	} else {
+	// 		dynamicItem.likeCount -= 1; // 点赞数 -1
+	// 	}
+	// }
+
 	function onComment(dynamicItem) {
 		// 弹出评论输入框
+		// console.log(dynamicItem.dynID)
 		uni.showModal({
 			title: "发表评论",
 			showCancel: true,
 			editable: true, // 显示输入框
 			placeholderText: "请输入评论内容",
 			success: (res) => {
+				console.log(res)
 				if (res.confirm) {
 					const commentContent = res.content.trim();
 					if (commentContent) {
-						// 添加评论到动态的评论列表
-						const stored = uni.getStorageSync('userInfo');
-
+						uni.request({
+							url: 'http://120.26.34.133:8081/dynamic/comment/add',
+							method: 'POST',
+							header: {
+								Authorization: myInfo.userID,
+							},
+							data: {
+								dynID: dynamicItem.dynID,
+								comment: commentContent
+							}
+						})
 						dynamicItem.commentList.push({
-							commentor: stored.nickname,
-							content: commentContent
-						});
-						console.log(dynamicItem.commentList);
-						// 更新评论数
+							author: myInfo.nickname,
+							comment: commentContent
+						})
 					} else {
 						uni.showToast({
 							title: "评论内容不能为空",

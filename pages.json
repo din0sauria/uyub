@@ -62,6 +62,13 @@
     {
       "navigationBarTitleText": "添加好友"
     }
+  },{
+    "path" : "pages/message/friend-request",
+     "style" : 
+     {
+       "navigationBarTitleText": "好友请求"
+     }
+    
   },
   {
     "path" : "pages/me/info-manage",
