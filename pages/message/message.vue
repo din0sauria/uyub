@@ -45,8 +45,12 @@
 <script setup>
 	import {
 		ref,
-		computed
+		computed,
+    reactive
 	} from 'vue';
+  import {
+    onShow
+  } from '@dcloudio/uni-app';
 	import tabBar from '/components/tabBar.vue';
 
 	// 模拟好友数据
@@ -115,6 +119,28 @@
 			unreadCount: 0,
 		}
 	]);
+  // 用户信息
+  const userInfo = reactive({
+    avatar: '/static/dinohead.jpg',
+    nickname: '未登录用户',
+    userID: '',
+    birthday: '',
+    token: ''
+  });
+  // 展示页面时读取本地存储的数据
+  onShow(() => {
+    const stored = uni.getStorageSync('userInfo');
+    if (stored) {
+      Object.assign(userInfo, stored); // 保持响应式
+    }
+        console.log('message页面显示');
+    // 在页面显示时重新加载好友列表
+    loadFriendList();
+  });
+  
+  onShow(() => {
+
+  });
 	const loadFriendList = async () => {
 		try {
 			// 发起 GET 请求获取聊天记录
@@ -124,9 +150,12 @@
 				url: 'http://120.26.34.133:8081/friend/get_friend_list', // 请求的 URL
 				method: 'GET',
 				header: {
-					Authorization: `${myInfo.token}` // 假设 userInfo.token 包含有效的授权令牌
+					Authorization: `${userInfo.token}` // 假设 userInfo.token 包含有效的授权令牌
 				},
 			});
+      console.log(data);
+			// 将返回的聊天记录数据赋值给 messages
+			messages.value = data.data;
 		} catch (error) {
 			// 如果请求失败，打印错误信息
 			console.error("加载历史消息失败:", error);
