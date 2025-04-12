@@ -73,7 +73,7 @@
 
 		// 模拟API调用
 		const res = await uni.request({
-			url: `http://120.26.34.133:8081/friend/send_friend_request/${parseInt(formData.friendId)}`,
+			url: `http://api.ballmate.temp.ziqiang.net.cn/friend/send_friend_request/${parseInt(formData.friendId)}`,
 			method: 'POST',
 			header: {
 				Authorization: myInfo.token

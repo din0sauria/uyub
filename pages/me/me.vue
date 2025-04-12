@@ -190,7 +190,7 @@
       const {
         data
       } = await uni.request({
-        url: 'http://120.26.34.133:8081/user/login',
+        url: 'http://api.ballmate.temp.ziqiang.net.cn/user/login',
         method: 'POST',
         header: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -210,14 +210,14 @@
       } else {
         uni.showToast({
           title: '登录失败',
-          icon: 'none'
+          icon: 'error'
         });
         console.log(data);
       }
     } catch (err) {
       uni.showToast({
         title: '登录失败',
-        icon: 'none'
+        icon: 'error'
       });
       console.log(err);
     }
@@ -226,7 +226,7 @@
     try {
       // 发送请求获取用户信息
       await uni.request({
-        url: 'http://120.26.34.133:8081/user/info',
+        url: 'http://api.ballmate.temp.ziqiang.net.cn/user/info',
         method: 'GET',
         header: {
           Authorization: `${userInfo.token}`

@@ -147,7 +147,7 @@
 			const {
 				data
 			} = await uni.request({
-				url: 'http://120.26.34.133:8081/friend/get_friend_list', // 请求的 URL
+				url: 'http://api.ballmate.temp.ziqiang.net.cn/friend/get_friend_list', // 请求的 URL
 				method: 'GET',
 				header: {
 					Authorization: `${userInfo.token}` // 假设 userInfo.token 包含有效的授权令牌

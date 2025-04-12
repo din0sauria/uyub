@@ -539,7 +539,7 @@
   });
   const getact = () => {
     uni.request({
-      url: 'http://120.26.34.133:8081/activity/list', // 替换为实际的后端接口地址
+      url: 'http://api.ballmate.temp.ziqiang.net.cn/activity/list', // 替换为实际的后端接口地址
       method: 'GET',
       header: {
         Authorization: `${userInfo.token}`

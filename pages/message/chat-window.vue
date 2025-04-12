@@ -98,7 +98,7 @@
 			const {
 				data
 			} = await uni.request({
-				url: 'http://120.26.34.133:8081/chat/get', // 请求的 URL
+				url: 'http://api.ballmate.temp.ziqiang.net.cn/chat/get', // 请求的 URL
 				method: 'GET',
 				header: {
 					Authorization: `${myInfo.token}` // 假设 userInfo.token 包含有效的授权令牌

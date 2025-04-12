@@ -48,7 +48,7 @@
 			const {
 				data: friendRequestData
 			} = await uni.request({
-				url: 'http://120.26.34.133:8081/friend/get_request_list',
+				url: 'http://api.ballmate.temp.ziqiang.net.cn/friend/get_request_list',
 				method: 'GET',
 				header: {
 					Authorization: myInfo.token
@@ -71,7 +71,7 @@
 			const {
 				data: res
 			} = await uni.request({
-				url: `http://120.26.34.133:8081/friend/accept_friend_request/${request.userId}`,
+				url: `http://api.ballmate.temp.ziqiang.net.cn/friend/accept_friend_request/${request.userId}`,
 				method: 'POST',
 				header: {
 					Authorization: myInfo.token

@@ -139,7 +139,7 @@ const publishPost = async () => {
     for (let i = 0; i < images.value.length; i++) {
       const image = images.value[i];
       const res = await uni.uploadFile({
-        url: 'http://120.26.34.133:8081/activity/upLoadFile',
+        url: 'http://api.ballmate.temp.ziqiang.net.cnziqiang.net.cn/activity/upLoadFile',
         filePath: image,
         name: 'file',
         header: {
@@ -158,7 +158,7 @@ const publishPost = async () => {
     post.images=images.value;
     await uni.request({
       method: 'POST',
-      url: 'http://120.26.34.133:8081/dynamic/add',
+      url: 'http://api.ballmate.temp.ziqiang.net.cnballmate.temp.ziqiang.net.cn/dynamic/add',
       header: {
         Authorization: `${userInfo.token}`
       },

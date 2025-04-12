@@ -235,7 +235,7 @@ const publishActivity =async  () => {
       const uploadPromises = images.value.map(image => {
         return new Promise((resolve, reject) => {
           uni.uploadFile({
-            url: 'http://120.26.34.133:8081/activity/upLoadFile',
+            url: 'http://api.ballmate.temp.ziqiang.net.cn/activity/upLoadFile',
             filePath: image,
             name: 'file',
             header: {
@@ -276,7 +276,7 @@ const publishActivity =async  () => {
             Authorization: `${userInfo.token}`,
             'Content-Type': 'application/json' // 添加合适的Content-Type
           },
-          url: 'http://120.26.34.133:8081/activity/add',
+          url: 'http://api.ballmate.temp.ziqiang.net.cn/activity/add',
           data: {
             ...activity,
             time: `${activity.startTime}-${activity.endTime}`,

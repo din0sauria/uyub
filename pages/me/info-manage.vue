@@ -68,7 +68,7 @@
       success: (imgurl) => {
         userInfo.avatar = imgurl.tempFilePaths[0];
         uni.uploadFile({
-          url: 'http://120.26.34.133:8081/user/fileUpload',
+          url: 'http://api.ballmate.temp.ziqiang.net.cn/user/fileUpload',
           filePath: imgurl.tempFilePaths[0],
           header: {
             Authorization: `${userInfo.token}`
@@ -102,7 +102,7 @@
   // 与后端交互的示例函数
   const interactWithBackend = () => {
     uni.request({
-      url: 'http://120.26.34.133:8081/user/update', // 替换为实际的后端接口地址
+      url: 'http://api.ballmate.temp.ziqiang.net.cn/user/update', // 替换为实际的后端接口地址
       method: 'PUT',
       header: {
         'Content-Type': 'application/json',

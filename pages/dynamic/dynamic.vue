@@ -79,8 +79,8 @@
 			const {
 				data:dynamicData
 			} = await uni.request({
-				// url: 'http://120.26.34.133:8081/dynamic/showDynamics', // 请求的 URL
-				url: 'http://120.26.34.133:8081/dynamic/showDynamics', 
+				// url: 'http://api.ballmate.temp.ziqiang.net.cn/dynamic/showDynamics', // 请求的 URL
+				url: 'http://api.ballmate.temp.ziqiang.net.cn/dynamic/showDynamics', 
 				method: 'GET',
 				header: {
 					Authorization: `${myInfo.token}` // 假设 userInfo.token 包含有效的授权令牌
@@ -95,7 +95,7 @@
 				const {
 					data: dynamicData
 				} = await uni.request({
-					url: 'http://120.26.34.133:8081/dynamic/showComments',
+					url: 'http://api.ballmate.temp.ziqiang.net.cn/dynamic/showComments',
 					method: 'GET',
 					header: {
 						Authorization: myInfo.token // 假设 userInfo.token 包含有效的授权令牌
@@ -137,7 +137,7 @@
 					const commentContent = res.content.trim();
 					if (commentContent) {
 						uni.request({
-							url: 'http://120.26.34.133:8081/dynamic/comment/add',
+							url: 'http://api.ballmate.temp.ziqiang.net.cn/dynamic/comment/add',
 							method: 'POST',
 							header: {
 								Authorization: myInfo.userID,
